@@ -1,15 +1,10 @@
 package com.myproject.restaurantvoting.service;
 
-import com.myproject.restaurantvoting.RestaurantVotingApplication;
-import com.myproject.restaurantvoting.controller.UserController;
 import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.repository.UserRepository;
 import com.myproject.restaurantvoting.util.VoteUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -61,12 +56,5 @@ public class UserService {
     public void vote(User user, int restaurantId, LocalDateTime votingDateTime) {
         LOG.info("vote {}", restaurantId);
         repository.save(VoteUtil.voteCreateUpdateHelper(user, restaurantId, votingDateTime));
-    }
-
-    public static void main(String[] args) {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(RestaurantVotingApplication.class);
-        UserController userService = ctx.getBean(UserController.class);
-
-        System.out.println(userService.hello);
     }
 }
