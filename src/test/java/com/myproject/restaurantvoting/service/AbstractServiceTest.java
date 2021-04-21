@@ -1,6 +1,7 @@
-package com.myproject.restaurantvoting.repository;
+package com.myproject.restaurantvoting.service;
 
 import com.myproject.restaurantvoting.util.SecurityUtil;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
@@ -16,13 +17,23 @@ public abstract class AbstractServiceTest {
     public static final Integer ID = START_SEQ;
     public static final Integer USER_ID = SecurityUtil.getUserId();
 
-    public void get() {};
+    @Test
+    public void get() {
+    }
 
-    public void getAll(){};
+    @Test
+    public void getAll() {
+    }
 
-    public void create(){};
+    @Test
+    public void create() {
+    }
 
-    public void update(){};
+    @Test
+    public void update() {
+    }
 
-    public void delete(){};
+    @Test
+    public void delete() {
+    }
 }

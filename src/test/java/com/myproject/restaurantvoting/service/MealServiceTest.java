@@ -1,10 +1,8 @@
-package com.myproject.restaurantvoting.repository;
+package com.myproject.restaurantvoting.service;
 
 import com.myproject.restaurantvoting.data.MealTestData;
 import com.myproject.restaurantvoting.data.RestaurantTestData;
 import com.myproject.restaurantvoting.model.Meal;
-import com.myproject.restaurantvoting.service.MealService;
-import com.myproject.restaurantvoting.service.RestaurantService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +46,7 @@ public class MealServiceTest extends AbstractServiceTest {
     public void getRestaurantWithNewMeal() {
         Meal newMeal = MealTestData.getNew();
         mealService.create(newMeal, ID + 1);
-        Assertions.assertEquals(restaurantService.get(ID +1), RestaurantTestData.BARTOLOMEO_WITH_NEW_MEAL);
+        Assertions.assertEquals(restaurantService.get(ID + 1), RestaurantTestData.BARTOLOMEO_WITH_NEW_MEAL);
     }
 
     @Test

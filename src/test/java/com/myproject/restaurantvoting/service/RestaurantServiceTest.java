@@ -1,12 +1,9 @@
-package com.myproject.restaurantvoting.repository;
+package com.myproject.restaurantvoting.service;
 
 import com.myproject.restaurantvoting.data.MealTestData;
 import com.myproject.restaurantvoting.data.RestaurantTestData;
 import com.myproject.restaurantvoting.model.Restaurant;
 import com.myproject.restaurantvoting.model.User;
-import com.myproject.restaurantvoting.service.MealService;
-import com.myproject.restaurantvoting.service.RestaurantService;
-import com.myproject.restaurantvoting.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
