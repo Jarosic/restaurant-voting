@@ -2,6 +2,7 @@ package com.myproject.restaurantvoting.repository;
 
 import com.myproject.restaurantvoting.model.Meal;
 import com.myproject.restaurantvoting.model.Restaurant;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
+@AllArgsConstructor
 @Transactional(readOnly = true)
 public class MealRepositoryImpl implements MealRepository {
 
@@ -17,10 +19,6 @@ public class MealRepositoryImpl implements MealRepository {
     private EntityManager entityManager;
 
     private final RestaurantRepository repository;
-
-    public MealRepositoryImpl(RestaurantRepository repository) {
-        this.repository = repository;
-    }
 
     @Override
     public List<Meal> getAll(int restaurantId) {

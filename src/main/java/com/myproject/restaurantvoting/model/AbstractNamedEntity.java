@@ -1,5 +1,7 @@
 package com.myproject.restaurantvoting.model;
 
+import lombok.AllArgsConstructor;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
