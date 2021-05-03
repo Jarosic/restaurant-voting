@@ -72,7 +72,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
         User user = userService.get(ID);
         user.setVotingDateTime(LocalDateTime.now());
         user.setRestaurant(update.getId());
-        userService.update(user);
+        userService.update(user, ID);
         update.setUser(user);
         Restaurant expected = restaurantService.get(ID + 3);
         Assertions.assertEquals(expected, update);

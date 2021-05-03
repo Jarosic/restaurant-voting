@@ -55,7 +55,7 @@ public class UserServiceTest extends AbstractServiceTest {
     @Override
     public void update() {
         User update = UserTestData.getUpdate();
-        service.update(update);
+        service.update(update, ID);
         User expected = service.get(ID);
         Assertions.assertEquals(expected, update);
     }

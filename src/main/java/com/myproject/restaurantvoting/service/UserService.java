@@ -42,9 +42,10 @@ public class UserService {
         return repository.save(user);
     }
 
-    public User update(User user) {
-        log.info("update {}", user);
-        return repository.save(user);
+    public void update(User user, int id) {
+        log.info("update user: {}, id: {}", user, id);
+        user.setId(id);
+        repository.save(user);
     }
 
     public boolean delete(int id) {
