@@ -3,12 +3,10 @@ package com.myproject.restaurantvoting.service;
 import com.myproject.restaurantvoting.data.MealTestData;
 import com.myproject.restaurantvoting.data.RestaurantTestData;
 import com.myproject.restaurantvoting.model.Restaurant;
-import com.myproject.restaurantvoting.model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class RestaurantServiceTest extends AbstractServiceTest {
@@ -42,7 +40,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     @Override
     public void create() {
         Restaurant newRestaurant = RestaurantTestData.getNew();
-        restaurantService.create(newRestaurant, USER_ID);
+        restaurantService.create(newRestaurant);
 
         Restaurant expected = restaurantService.get(ID + 12);
 
@@ -60,20 +58,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     @Override
     public void update() {
         Restaurant update = RestaurantTestData.getUpdate();
-        restaurantService.update(update, null);
-        Restaurant expected = restaurantService.get(ID + 3);
-        Assertions.assertEquals(expected, update);
-    }
-
-    @Test
-    public void updateWithUser() {
-        Restaurant update = RestaurantTestData.getUpdate();
-        restaurantService.update(update, ID);
-        User user = userService.get(ID);
-        user.setVotingDateTime(LocalDateTime.now());
-        user.setRestaurant(update.getId());
-        userService.update(user, ID);
-        update.setUser(user);
+        restaurantService.update(update);
         Restaurant expected = restaurantService.get(ID + 3);
         Assertions.assertEquals(expected, update);
     }

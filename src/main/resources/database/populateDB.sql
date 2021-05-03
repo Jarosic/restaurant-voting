@@ -12,10 +12,10 @@ INSERT INTO user_roles (role, user_id)
 VALUES ('USER', 100000),
        ('ADMIN', 100001);
 
-INSERT INTO restaurants(id, name, user_id)
-values (100001, 'Bartolomeo', null),
-       (100002, 'Khutor', null),
-       (100003, 'Celentano', null);
+INSERT INTO restaurants(id, name)
+values (100001, 'Bartolomeo'),
+       (100002, 'Khutor'),
+       (100003, 'Celentano');
 
 
 INSERT INTO meals(restaurant_id, description, price)

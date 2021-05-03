@@ -27,14 +27,14 @@ public class RestaurantService {
         return restaurant;
     }
 
-    public Restaurant create(Restaurant restaurant, Integer userId) {
+    public Restaurant create(Restaurant restaurant) {
         log.info("create {}", restaurant);
-        return repository.save(restaurant, userId);
+        return repository.save(restaurant);
     }
 
-    public Restaurant update(Restaurant restaurant, Integer userId) {
+    public Restaurant update(Restaurant restaurant) {
         log.info("update {}", restaurant);
-        return repository.save(restaurant, userId);
+        return repository.save(restaurant);
     }
 
     public boolean delete(int id) {

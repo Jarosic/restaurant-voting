@@ -1,6 +1,6 @@
-package com.myproject.restaurantvoting.controller.user;
+package com.myproject.restaurantvoting.controller.restaurant;
 
-import com.myproject.restaurantvoting.model.User;
+import com.myproject.restaurantvoting.model.Restaurant;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,43 +13,39 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = UserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class UserController extends AbstractUserController {
+@RequestMapping(value = RestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class RestaurantController extends AbstractRestaurantController {
 
-    static final String REST_URL = "api/admin/users";
+    static final String REST_URL = "api/restaurants";
 
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<User> getAll() {
+    public List<Restaurant> getAll() {
         return super.getAll();
     }
 
-    @Override
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public User get(@PathVariable int id) {
+    public Restaurant get(@PathVariable int id) {
         return super.get(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> createWithLocation(@RequestBody User user) {
-        User created = super.create(user);
+    public ResponseEntity<Restaurant> createWithLocation(@RequestBody Restaurant restaurant
+    ) {
+        Restaurant created = super.create(restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
-    @Override
-    @GetMapping("/by")
-    public User getByEmail(@RequestParam String email) {
-        System.out.println("GET BY EMAIL: " + email);
-        return super.getByEmail(email);
-    }
-
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody User user, @PathVariable int id) {
-        super.update(user, id);
+    public void update(
+            @RequestBody Restaurant restaurant,
+            @PathVariable int id
+    ) {
+        super.update(restaurant,id);
     }
 
     @Override
@@ -57,11 +53,4 @@ public class UserController extends AbstractUserController {
     public void delete(@PathVariable int id) {
         super.delete(id);
     }
-
-    @Override
-    @PutMapping(value = "/vote", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void vote(@RequestBody User user, @RequestParam int restaurantId) {
-        super.vote(user, restaurantId);
-    }
- }
+}

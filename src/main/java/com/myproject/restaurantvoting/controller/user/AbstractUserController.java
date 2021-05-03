@@ -2,7 +2,6 @@ package com.myproject.restaurantvoting.controller.user;
 
 import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.service.UserService;
-import com.myproject.restaurantvoting.util.VoteUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -11,7 +11,7 @@ public interface RestaurantRepository {
 
     List<Restaurant> getAll();
 
-    Restaurant save(Restaurant restaurant, Integer userId);
+    Restaurant save(Restaurant restaurant);
 
     boolean delete(int id);
 

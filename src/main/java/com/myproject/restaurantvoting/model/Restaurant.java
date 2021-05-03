@@ -1,5 +1,7 @@
 package com.myproject.restaurantvoting.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.CascadeType;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,13 +20,9 @@ public class Restaurant extends AbstractNamedEntity {
     public static final String GET_ALL = "Restaurant.getAll";
     public static final String DELETE = "Restaurant.delete";
 
-
+    @JsonIgnore
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Meal> meals = new ArrayList<>();
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     public Restaurant() {
     }
@@ -36,14 +34,6 @@ public class Restaurant extends AbstractNamedEntity {
 
     public Restaurant(String name) {
         super(null, name);
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     public List<Meal> getMeals() {
@@ -59,7 +49,6 @@ public class Restaurant extends AbstractNamedEntity {
         return "Restaurant{" +
                 "id=" + getId() +
                 ", name=" + name +
-                ", user=" + user +
                 ", meals: " + meals +
                 "}";
     }

@@ -35,11 +35,7 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
 
     @Override
     @Transactional
-    public Restaurant save(Restaurant restaurant, Integer userId) {
-        if (userId != null) {
-            User user = userRepository.get(userId);
-            restaurant.setUser(user);
-        }
+    public Restaurant save(Restaurant restaurant) {
         if (restaurant.isNew()) {
             entityManager.persist(restaurant);
             return restaurant;
