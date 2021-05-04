@@ -41,10 +41,7 @@ public class RestaurantController extends AbstractRestaurantController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(
-            @RequestBody Restaurant restaurant,
-            @PathVariable int id
-    ) {
+    public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
         super.update(restaurant,id);
     }
 

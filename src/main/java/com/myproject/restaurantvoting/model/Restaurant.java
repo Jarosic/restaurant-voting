@@ -1,6 +1,7 @@
 package com.myproject.restaurantvoting.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.CascadeType;
 import javax.persistence.*;
@@ -20,7 +21,7 @@ public class Restaurant extends AbstractNamedEntity {
     public static final String GET_ALL = "Restaurant.getAll";
     public static final String DELETE = "Restaurant.delete";
 
-    @JsonIgnore
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Meal> meals = new ArrayList<>();
 

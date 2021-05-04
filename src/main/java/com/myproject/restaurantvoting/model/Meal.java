@@ -1,5 +1,6 @@
 package com.myproject.restaurantvoting.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -17,7 +18,7 @@ public class Meal extends AbstractBaseEntity {
     public static final String GET_ALL = "Meal.getAll";
     public static final String DELETE = "Meal.delete";
 
-    @JsonIgnore
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "restaurant_id")
     private Restaurant restaurant;

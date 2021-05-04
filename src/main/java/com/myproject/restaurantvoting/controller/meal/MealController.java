@@ -1,24 +1,46 @@
 package com.myproject.restaurantvoting.controller.meal;
 
 import com.myproject.restaurantvoting.model.Meal;
-import com.myproject.restaurantvoting.service.MealService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.List;
+import java.net.URI;
 
 @RestController
 @AllArgsConstructor
-public class MealController {
+@RequestMapping(value = MealController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class MealController extends AbstractMealController {
+    public static final String REST_URL = "api/meals";
 
-    @Autowired
-    protected MealService service;
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Meal get(@PathVariable int id) {
+        return super.get(id);
+    }
 
-    @GetMapping("api/meals")
-    public List<Meal> getAll(@RequestParam int restaurantId) {
-        return service.getAll(restaurantId);
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Meal> createWithLocation(@RequestBody Meal meal, @RequestParam int restaurantId) {
+        Meal created = super.create(meal, restaurantId);
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(created);
+    }
+
+    @Override
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@RequestBody Meal meal, @RequestParam int restaurantId, @PathVariable int id) {
+        super.update(meal, restaurantId, id);
+    }
+
+    @Override
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int id) {
+        super.delete(id);
     }
 }
