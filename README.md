@@ -1,5 +1,5 @@
 # restaurant-voting
-Design and implement a REST API using Hibernate(Spring-Data)/Spring-Boot.
+Design and implement a REST API using Hibernate/Spring-Boot.
 
 The task is:
 
