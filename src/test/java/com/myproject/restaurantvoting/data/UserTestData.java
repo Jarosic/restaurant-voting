@@ -29,7 +29,7 @@ public class UserTestData {
 
     public static User getUpdate() {
         User updated = USER;
-        updated.setEmail("update@gmail.com");
+            updated.setEmail("update@gmail.com");
         updated.setName("UpdatedName");
         updated.setPassword("newPass");
         updated.setEnabled(false);

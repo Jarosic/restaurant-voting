@@ -37,18 +37,18 @@ public abstract class AbstractUserController {
         return userService.create(user);
     }
 
-    public void update(User user, int id) {
+    public User update(User user, int id) {
         log.info("update user: {} id: {}, ", user, id);
-        userService.update(user, id);
+        return userService.update(user, id);
     }
 
-    public void delete(int id) {
+    public boolean delete(int id) {
         log.info("delete {}", id);
-        userService.delete(id);
+        return userService.delete(id);
     }
 
-    public void vote(User user, int restaurantId) {
+    public User vote(User user, int restaurantId) {
         log.info("vote {}", restaurantId);
-        userService.vote(user, restaurantId, LocalDateTime.now());
+        return userService.vote(user, restaurantId, LocalDateTime.now());
     }
 }

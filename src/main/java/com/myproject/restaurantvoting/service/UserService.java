@@ -42,10 +42,10 @@ public class UserService {
         return repository.save(user);
     }
 
-    public void update(User user, int id) {
+    public User update(User user, int id) {
         log.info("update user: {}, id: {}", user, id);
         user.setId(id);
-        repository.save(user);
+        return repository.save(user);
     }
 
     public boolean delete(int id) {
@@ -53,8 +53,8 @@ public class UserService {
        return repository.delete(id);
     }
 
-    public void vote(User user, int restaurantId, LocalDateTime votingDateTime) {
+    public User vote(User user, int restaurantId, LocalDateTime votingDateTime) {
         log.info("vote {}", restaurantId);
-        repository.save(VoteUtil.voteCreateUpdateHelper(user, restaurantId, votingDateTime));
+        return repository.save(VoteUtil.voteCreateUpdateHelper(user, restaurantId, votingDateTime));
     }
 }

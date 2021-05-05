@@ -42,26 +42,23 @@ public class UserController extends AbstractUserController {
     @Override
     @GetMapping("/by")
     public User getByEmail(@RequestParam String email) {
-        System.out.println("GET BY EMAIL: " + email);
         return super.getByEmail(email);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody User user, @PathVariable int id) {
-        super.update(user, id);
+    public User update(@RequestBody User user, @PathVariable int id) {
+        return super.update(user, id);
     }
 
     @Override
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        super.delete(id);
+    public boolean delete(@PathVariable int id) {
+       return super.delete(id);
     }
 
     @Override
-    @PutMapping(value = "/vote", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void vote(@RequestBody User user, @RequestParam int restaurantId) {
-        super.vote(user, restaurantId);
+    @PatchMapping(value = "/vote", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public User vote(@RequestBody User user, @RequestParam int restaurantId) {
+        return super.vote(user, restaurantId);
     }
  }
