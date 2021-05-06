@@ -6,20 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Slf4j
 @AllArgsConstructor
 @Service
 public class MealService {
 
     private final MealRepository repository;
-
-    public List<Meal> getAll(int restaurantId) {
-        List<Meal> meals = repository.getAll(restaurantId);
-        log.info("getAllMeals: {}", meals);
-        return meals;
-    }
 
     public Meal get(int id) {
         Meal meal = repository.get(id);

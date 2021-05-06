@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.List;
 
 @Repository
 @AllArgsConstructor
@@ -16,17 +15,9 @@ import java.util.List;
 public class MealRepositoryImpl implements MealRepository {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     private final RestaurantRepository repository;
-
-    @Override
-    public List<Meal> getAll(int restaurantId) {
-        return entityManager
-                .createNamedQuery(Meal.GET_ALL)
-                .setParameter("restaurantId", restaurantId)
-                .getResultList();
-    }
 
     @Override
     public Meal get(int id) {

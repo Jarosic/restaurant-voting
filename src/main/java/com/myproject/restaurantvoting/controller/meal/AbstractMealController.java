@@ -22,13 +22,13 @@ public class AbstractMealController {
         return service.create(meal, restaurantId);
     }
 
-    public void update(Meal meal, int restaurantId, int id) {
+    public Meal update(Meal meal, int restaurantId, int id) {
         log.info("update meal: {}, id: {}", meal, id);
-        service.update(meal, restaurantId);
+        return service.update(meal, restaurantId);
     }
 
-    public void delete(int id) {
+    public boolean delete(int id) {
         log.info("delete {}", id);
-        service.delete(id);
+        return service.delete(id);
     }
 }

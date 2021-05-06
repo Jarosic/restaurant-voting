@@ -48,7 +48,7 @@ public class MealTestData {
     public static final Meal MEAL_PIVOMAN_3 = new Meal( "Ice cream", 20);
 
 
-    public static Meal meal = new Meal(ID + 1, "Сoffee", 35);
+    public static Meal meal = new Meal(ID + 1, "Milk", 35);
 
     public static Meal getUpdate() {
         meal.setId(ID + 1);
@@ -58,6 +58,6 @@ public class MealTestData {
     }
 
     public static Meal getNew() {
-        return new Meal(ID + 15, "Coconut", 100);
+        return new Meal("Coconut", 100);
     }
 }

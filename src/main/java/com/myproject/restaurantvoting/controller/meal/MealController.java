@@ -2,7 +2,6 @@ package com.myproject.restaurantvoting.controller.meal;
 
 import com.myproject.restaurantvoting.model.Meal;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,15 +31,13 @@ public class MealController extends AbstractMealController {
 
     @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Meal meal, @RequestParam int restaurantId, @PathVariable int id) {
-        super.update(meal, restaurantId, id);
+    public Meal update(@RequestBody Meal meal, @RequestParam int restaurantId, @PathVariable int id) {
+        return super.update(meal, restaurantId, id);
     }
 
     @Override
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id) {
-        super.delete(id);
+    public boolean delete(@PathVariable int id) {
+        return super.delete(id);
     }
 }

@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-
 public class MealServiceTest extends AbstractServiceTest {
 
     @Autowired
@@ -16,13 +14,6 @@ public class MealServiceTest extends AbstractServiceTest {
 
     @Autowired
     private RestaurantService restaurantService;
-
-    @Test
-    public void getAll() {
-        List<Meal> expected = mealService.getAll(ID + 1);
-        List<Meal> actual = MealTestData.MEAL_LIST_BARTOLOMEO;
-        Assertions.assertEquals(expected, actual);
-    }
 
     @Test
     @Override
