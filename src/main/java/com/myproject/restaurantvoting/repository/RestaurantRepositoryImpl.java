@@ -2,7 +2,6 @@ package com.myproject.restaurantvoting.repository;
 
 
 import com.myproject.restaurantvoting.model.Restaurant;
-import com.myproject.restaurantvoting.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +16,7 @@ import java.util.List;
 public class RestaurantRepositoryImpl implements RestaurantRepository {
 
     @PersistenceContext
-    private EntityManager entityManager;
-
-    private final UserRepository userRepository;
+    private final EntityManager entityManager;
 
     @Override
     public Restaurant get(int id) {

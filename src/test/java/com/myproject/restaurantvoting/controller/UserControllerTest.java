@@ -152,30 +152,6 @@ public class UserControllerTest {
         Assertions.assertTrue(Boolean.parseBoolean(result.getResponse().getContentAsString()));
     }
 
-//    @Test
-//    public void vote() throws Exception {
-//        String url = REST_URL + "/vote?restaurantId=" + RestaurantTestData.BARTOLOMEO.id();
-//
-//        Restaurant restaurant = RestaurantTestData.BARTOLOMEO;
-//        LocalDateTime voteDateTime = LocalDateTime.now();
-//        User userWithVote = UserTestData.getUpdateWithVote(voteDateTime, restaurant.getId());
-//
-//        when(userService.vote(UserTestData.USER, restaurant.getId(), voteDateTime)).thenReturn(userWithVote);
-//
-//        MvcResult result = mockMvc.perform(patch(url)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(objectMapper.writeValueAsString(userWithVote)))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.restaurant").value("100001"))
-//                .andExpect(jsonPath("$.id").value(USER_ID))
-//                .andDo(print())
-//                .andReturn();
-//
-//        String actual = result.getResponse().getContentAsString();
-//        String expected = objectMapper.writeValueAsString(userWithVote);
-//        Assertions.assertEquals(expected, actual);
-//    }
-
     @Test
     public void vote() throws Exception {
         String url = REST_URL + "/vote?restaurantId=" + RestaurantTestData.BARTOLOMEO.id();
