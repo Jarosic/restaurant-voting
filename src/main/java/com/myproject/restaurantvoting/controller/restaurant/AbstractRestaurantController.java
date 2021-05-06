@@ -30,13 +30,13 @@ public abstract class AbstractRestaurantController {
         return service.create(restaurant);
     }
 
-    public void update(Restaurant restaurant, int id) {
+    public Restaurant update(Restaurant restaurant, int id) {
         log.info("update restaurant {}, id {}", restaurant, id);
-        service.update(restaurant);
+        return service.update(restaurant);
     }
 
-    public void delete(int id) {
+    public boolean delete(int id) {
         log.info("delete {}", id);
-        service.delete(id);
+        return service.delete(id);
     }
 }

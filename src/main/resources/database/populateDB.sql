@@ -19,7 +19,7 @@ values (100001, 'Bartolomeo'),
 
 
 INSERT INTO meals(restaurant_id, description, price)
-VALUES (100001, 'Сoffee', 35),
+VALUES (100001, 'Milk', 35),
        (100001, 'Cake', 50),
        (100001, 'Ice cream', 20),
 

@@ -96,21 +96,21 @@ public class UserControllerTest {
 
     @Test
     public void getByEmail() throws Exception {
-        User user = UserTestData.USER;
-        String url = REST_URL + "/by?email=" + user.getEmail();
+        User admin = UserTestData.ADMIN;
+        String url = REST_URL + "/by?email=" + admin.getEmail();
 
-        when(userService.getByEmail(user.getEmail())).thenReturn(user);
+        when(userService.getByEmail(admin.getEmail())).thenReturn(admin);
 
         MvcResult result = mockMvc.perform(get(url)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(user)))
+                .content(objectMapper.writeValueAsString(admin)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.email").value("user@yandex.ru"))
+                .andExpect(jsonPath("$.email").value("admin@gmail.com"))
                 .andDo(print())
                 .andReturn();
 
         String actual = result.getResponse().getContentAsString();
-        String expected = objectMapper.writeValueAsString(user);
+        String expected = objectMapper.writeValueAsString(admin);
         Assertions.assertEquals(expected, actual);
     }
 

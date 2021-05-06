@@ -13,7 +13,7 @@ public class MealTestData {
     private static final Integer ID = START_SEQ + 1;
 
     public static final List<Meal> MEAL_LIST_BARTOLOMEO = new ArrayList<>(Arrays.asList(
-            new Meal(ID + 1, "Сoffee", 35),
+            new Meal(ID + 1, "Milk", 35),
             new Meal(ID + 2, "Cake", 50),
             new Meal(ID + 3, "Ice cream", 20)
     ));

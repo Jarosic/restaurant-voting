@@ -40,14 +40,13 @@ public class RestaurantController extends AbstractRestaurantController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody Restaurant restaurant, @PathVariable int id) {
-        super.update(restaurant,id);
+    public Restaurant update(@RequestBody Restaurant restaurant, @PathVariable int id) {
+        return super.update(restaurant,id);
     }
 
     @Override
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        super.delete(id);
+    public boolean delete(@PathVariable int id) {
+        return super.delete(id);
     }
 }
