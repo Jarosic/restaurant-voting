@@ -29,7 +29,7 @@ public class UserTestData {
 
     public static User getUpdate() {
         User updated = USER;
-            updated.setEmail("update@gmail.com");
+        updated.setEmail("update@gmail.com");
         updated.setName("UpdatedName");
         updated.setPassword("newPass");
         updated.setEnabled(false);
@@ -40,7 +40,7 @@ public class UserTestData {
     public static User getUpdateWithVote(LocalDateTime localDateTime, int restaurantId) {
         User updated = USER;
         updated.setVotingDateTime(localDateTime);
-        updated.setRestaurant(restaurantId);
+        updated.setRestaurantId(restaurantId);
         return updated;
     }
 }

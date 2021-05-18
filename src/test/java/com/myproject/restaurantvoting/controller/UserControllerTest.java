@@ -120,7 +120,7 @@ public class UserControllerTest {
         String url = REST_URL + "/" + USER_ID;
         User updated = UserTestData.getUpdate();
         updated.setId(USER_ID);
-        updated.setRestaurant(100002);
+        updated.setRestaurantId(100002);
 
         when(userService.update(updated, USER_ID)).thenReturn(updated);
 

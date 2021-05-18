@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class MealServiceTest extends AbstractServiceTest {
 
     @Autowired
@@ -37,7 +39,7 @@ public class MealServiceTest extends AbstractServiceTest {
     public void getRestaurantWithNewMeal() {
         Meal newMeal = MealTestData.getNew();
         mealService.create(newMeal, ID + 1);
-        Assertions.assertEquals(restaurantService.get(ID + 1), RestaurantTestData.BARTOLOMEO_WITH_NEW_MEAL);
+        assertThat(RestaurantTestData.BARTOLOMEO_WITH_NEW_MEAL).isEqualTo(restaurantService.get(ID + 1));
     }
 
     @Test

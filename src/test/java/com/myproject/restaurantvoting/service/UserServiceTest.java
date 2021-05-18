@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserServiceTest extends AbstractServiceTest {
 
@@ -23,7 +24,8 @@ public class UserServiceTest extends AbstractServiceTest {
     public void get() {
         User expected = service.get(ID);
         User actual = UserTestData.USER;
-        Assertions.assertEquals(expected, actual);
+        actual.setRegistered(expected.getRegistered());
+        assertThat(actual).usingRecursiveComparison().ignoringFields("registered").isEqualTo(expected);
     }
 
     @Test
@@ -31,14 +33,14 @@ public class UserServiceTest extends AbstractServiceTest {
     public void getAll() {
         List<User> expected = service.getAll();
         List<User> actual = UserTestData.getUserList();
-        Assertions.assertEquals(expected, actual);
+        assertThat(actual).usingElementComparatorIgnoringFields("registered").isEqualTo(expected);
     }
 
     @Test
     public void getByEmail() {
         User expected = service.getByEmail("user@yandex.ru");
         User actual = UserTestData.USER;
-        Assertions.assertEquals(expected, actual);
+        assertThat(actual).usingRecursiveComparison().ignoringFields("registered").isEqualTo(expected);
     }
 
     @Test
@@ -48,7 +50,7 @@ public class UserServiceTest extends AbstractServiceTest {
         service.create(newUser);
         User expected = service.get(ID + 12);
         newUser.setId(ID + 12);
-        Assertions.assertEquals(expected, newUser);
+        assertThat(newUser).usingRecursiveComparison().ignoringFields("registered").isEqualTo(expected);
     }
 
     @Test
@@ -57,7 +59,7 @@ public class UserServiceTest extends AbstractServiceTest {
         User update = UserTestData.getUpdate();
         service.update(update, ID);
         User expected = service.get(ID);
-        Assertions.assertEquals(expected, update);
+        assertThat(update).usingRecursiveComparison().ignoringFields("registered").isEqualTo(expected);
     }
 
     @Test
@@ -73,7 +75,7 @@ public class UserServiceTest extends AbstractServiceTest {
         service.vote(update, ID + 1, null);
         User expected = service.get(ID);
         update.setVotingDateTime(expected.getVotingDateTime());
-        Assertions.assertEquals(expected, update);
+        assertThat(update).usingRecursiveComparison().ignoringFields("registered").isEqualTo(expected);
     }
 
     @Test
@@ -89,7 +91,7 @@ public class UserServiceTest extends AbstractServiceTest {
         service.vote(reVote, ID + 2, secondVote);
 
         User expected = service.get(ID);
-        Assertions.assertEquals(expected, reVote);
+        assertThat(reVote).usingRecursiveComparison().ignoringFields("registered").isEqualTo(expected);
     }
 
     @Test

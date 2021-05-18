@@ -1,9 +1,14 @@
 package com.myproject.restaurantvoting.model;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
+@EqualsAndHashCode(callSuper = true)
 @MappedSuperclass
+@Data
 public abstract class AbstractNamedEntity extends AbstractBaseEntity {
 
     @Column(name = "name", nullable = false)
@@ -25,8 +30,4 @@ public abstract class AbstractNamedEntity extends AbstractBaseEntity {
         return this.name;
     }
 
-    @Override
-    public String toString() {
-        return super.toString() + '(' + name + ')';
-    }
 }

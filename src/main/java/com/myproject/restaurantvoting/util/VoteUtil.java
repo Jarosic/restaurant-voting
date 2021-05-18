@@ -18,9 +18,9 @@ public class VoteUtil {
        return dateTime == null;
     }
 
-    public static User voteCreateUpdateHelper(User user, int restaurantId, LocalDateTime votingDateTime) {
+    public static User voteCreateUpdateHelper(User user, Integer restaurantId, LocalDateTime votingDateTime) {
         User updatedUser = new User(
-                user.id(),
+                user.getId(),
                 user.getName(),
                 user.getEmail(),
                 user.getPassword(),
@@ -31,12 +31,12 @@ public class VoteUtil {
 
         if (VoteUtil.checkVote(user.getVotingDateTime())) {
             updatedUser.setVotingDateTime(LocalDateTime.now());
-            updatedUser.setRestaurant(restaurantId);
+            updatedUser.setRestaurantId(restaurantId);
         } else {
 
             if (VoteUtil.checkVotingTime(votingDateTime)) {
                 updatedUser.setVotingDateTime(votingDateTime);
-                updatedUser.setRestaurant(restaurantId);
+                updatedUser.setRestaurantId(restaurantId);
             } else {
                 throw new VotingTimeLimitException();
             }

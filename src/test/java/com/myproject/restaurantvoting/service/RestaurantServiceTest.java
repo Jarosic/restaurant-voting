@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.util.List;
 
 public class RestaurantServiceTest extends AbstractServiceTest {
@@ -17,15 +19,12 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     @Autowired
     private MealService mealService;
 
-    @Autowired
-    private UserService userService;
-
     @Test
     @Override
     public void get() {
         Restaurant expected = restaurantService.get(ID + 1);
         Restaurant actual = RestaurantTestData.BARTOLOMEO;
-        Assertions.assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -33,7 +32,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     public void getAll() {
         List<Restaurant> expected = restaurantService.getAll();
         List<Restaurant> actual = RestaurantTestData.restaurants;
-        Assertions.assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -50,8 +49,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
         Restaurant actual = RestaurantTestData.getNew();
         actual.setId(100012);
-        actual.setMeals(MealTestData.MEAL_LIST_PIVOMAN);
-        Assertions.assertEquals(expected, actual);
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -60,7 +58,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
         Restaurant update = RestaurantTestData.getUpdate();
         restaurantService.update(update);
         Restaurant expected = restaurantService.get(ID + 3);
-        Assertions.assertEquals(expected, update);
+        assertThat(update).isEqualTo(expected);
     }
 
     @Test

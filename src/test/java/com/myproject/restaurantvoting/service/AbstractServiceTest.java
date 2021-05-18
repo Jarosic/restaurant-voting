@@ -1,6 +1,5 @@
 package com.myproject.restaurantvoting.service;
 
-import com.myproject.restaurantvoting.util.SecurityUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,7 +14,6 @@ import static com.myproject.restaurantvoting.model.AbstractBaseEntity.START_SEQ;
 public abstract class AbstractServiceTest {
 
     public static final Integer ID = START_SEQ;
-    public static final Integer USER_ID = SecurityUtil.getUserId();
 
     @Test
     public void get() {

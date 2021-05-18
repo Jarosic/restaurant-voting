@@ -32,15 +32,10 @@ public class MealTestData {
     ));
 
     public static final List<Meal> MEAL_LIST_BARTOLOMEO_WITH_NEW_MEAL = new ArrayList<>(Arrays.asList(
-            new Meal(ID + 1, "Сoffee", 35),
+            new Meal(ID + 1, "Milk", 35),
             new Meal(ID + 2, "Cake", 50),
             new Meal(ID + 3, "Ice cream", 20),
-            new Meal(ID + 15, "Coconut", 100)
-    ));
-    public static final List<Meal> MEAL_LIST_PIVOMAN = new ArrayList<>(Arrays.asList(
-            new Meal(ID + 12,"El", 40),
-            new Meal(ID + 13,"Fish", 15),
-            new Meal(ID + 14,"Ice cream", 20)
+            new Meal(ID + 11, "Coconut", 100)
     ));
 
     public static final Meal MEAL_PIVOMAN_1 = new Meal( "El", 40);

@@ -1,8 +1,10 @@
 package com.myproject.restaurantvoting.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 
 import javax.persistence.*;
+
 
 @NamedQueries({
         @NamedQuery(name = Meal.GET_ALL,
@@ -10,7 +12,11 @@ import javax.persistence.*;
         @NamedQuery(name = Meal.DELETE,
                 query = "DELETE FROM Meal m where m.id=:id")
 })
+
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "meals")
 public class Meal extends AbstractBaseEntity {
 
@@ -36,33 +42,6 @@ public class Meal extends AbstractBaseEntity {
 
     public Meal(String description, int price) {
         this(null, description, price);
-    }
-
-    public Meal() {
-    }
-
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 
     @Override

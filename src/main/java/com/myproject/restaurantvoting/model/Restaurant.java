@@ -1,12 +1,13 @@
 package com.myproject.restaurantvoting.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @NamedQueries({
         @NamedQuery(name = Restaurant.GET_ALL,
@@ -15,6 +16,11 @@ import java.util.List;
                 query = "DELETE FROM Restaurant r where r.id=:id")
 })
 @Entity
+@EqualsAndHashCode(callSuper = true)
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString(callSuper = true)
 @Table(name = "restaurants")
 public class Restaurant extends AbstractNamedEntity {
 
@@ -25,32 +31,8 @@ public class Restaurant extends AbstractNamedEntity {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Meal> meals = new ArrayList<>();
 
-    public Restaurant() {
-    }
-
     public Restaurant(Integer id, String name, List<Meal> meals) {
         super(id, name);
         this.meals = meals;
-    }
-
-    public Restaurant(String name) {
-        super(null, name);
-    }
-
-    public List<Meal> getMeals() {
-        return meals;
-    }
-
-    public void setMeals(List<Meal> meals) {
-        this.meals = meals;
-    }
-
-    @Override
-    public String toString() {
-        return "Restaurant{" +
-                "id=" + getId() +
-                ", name=" + name +
-                ", meals: " + meals +
-                "}";
     }
 }
