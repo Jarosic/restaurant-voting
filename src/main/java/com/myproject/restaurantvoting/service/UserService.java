@@ -3,6 +3,7 @@ package com.myproject.restaurantvoting.service;
 import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.repository.UserRepository;
 import com.myproject.restaurantvoting.util.VoteUtil;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -11,13 +12,10 @@ import java.util.List;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class UserService {
 
     public final UserRepository repository;
-
-    public UserService(UserRepository repository) {
-        this.repository = repository;
-    }
 
     public List<User> getAll() {
         List<User> users = repository.getAll();
