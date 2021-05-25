@@ -36,6 +36,12 @@
             <version>1.2</version>
         </dependency>
 
+        <!--Auth-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
         <!-- DB-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
