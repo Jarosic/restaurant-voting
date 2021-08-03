@@ -47,6 +47,12 @@ public class UserService implements UserDetailsService {
 
     public User update(User user, int id) {
         log.info("update user: {}, id: {}", user, id);
+
+        if (user.getPassword() == null) {
+            User u = repository.get(id);
+            user.setPassword(u.getPassword());
+        }
+
         user.setId(id);
         return repository.save(user);
     }
@@ -56,8 +62,14 @@ public class UserService implements UserDetailsService {
        return repository.delete(id);
     }
 
-    public User vote(User user, int restaurantId, LocalDateTime votingDateTime) {
+    public User vote(Integer userId, int restaurantId, LocalDateTime votingDateTime) {
         log.info("vote {}", restaurantId);
+        User user = new User();
+
+        if (userId != null) {
+            user = repository.get(userId);
+        }
+
         return repository.save(VoteUtil.voteCreateUpdateHelper(user, restaurantId, votingDateTime));
     }
 

@@ -1,6 +1,7 @@
 package com.myproject.restaurantvoting.controller.restaurant;
 
 import com.myproject.restaurantvoting.model.Restaurant;
+import com.myproject.restaurantvoting.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -47,5 +48,11 @@ public class RestaurantController extends AbstractRestaurantController {
     @DeleteMapping("/{id}")
     public boolean delete(@PathVariable int id) {
         return super.delete(id);
+    }
+
+    @Override
+    @PatchMapping(value = "/vote", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public User vote(@RequestParam Integer userId, @RequestParam int restaurantId) {
+        return super.vote(userId, restaurantId);
     }
 }

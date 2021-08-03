@@ -2,6 +2,7 @@ package com.myproject.restaurantvoting.controller.user;
 
 import com.myproject.restaurantvoting.model.User;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
+@Slf4j
 @RequestMapping(value = UserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController extends AbstractUserController {
 
@@ -46,6 +48,7 @@ public class UserController extends AbstractUserController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public User update(@RequestBody User user, @PathVariable int id) {
+        log.info("PUT {}" + user.getPassword());
         return super.update(user, id);
     }
 
@@ -53,11 +56,5 @@ public class UserController extends AbstractUserController {
     @DeleteMapping("/{id}")
     public boolean delete(@PathVariable int id) {
        return super.delete(id);
-    }
-
-    @Override
-    @PatchMapping(value = "/vote", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public User vote(@RequestBody User user, @RequestParam int restaurantId) {
-        return super.vote(user, restaurantId);
     }
  }

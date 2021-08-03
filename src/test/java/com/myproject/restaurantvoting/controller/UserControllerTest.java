@@ -160,7 +160,7 @@ public class UserControllerTest {
         LocalDateTime voteDateTime = LocalDateTime.now();
         User userWithVote = UserTestData.getUpdateWithVote(voteDateTime, restaurant.getId());
 
-        when(userService.vote(UserTestData.USER, restaurant.getId(), voteDateTime)).thenReturn(userWithVote);
+        when(userService.vote(null, restaurant.getId(), voteDateTime)).thenReturn(userWithVote);
 
         mockMvc.perform(patch(url)
                 .contentType(MediaType.APPLICATION_JSON)

@@ -88,7 +88,7 @@ public class UserServiceTest extends AbstractServiceTest {
     public void voteNew() {
         User update = UserTestData
                 .getUpdateWithVote(null, ID + 1);
-        service.vote(update, ID + 1, null);
+        service.vote(update.id(), ID + 1, null);
         User expected = service.get(ID);
         update.setVotingDateTime(expected.getVotingDateTime());
         assertThat(update)
@@ -104,11 +104,11 @@ public class UserServiceTest extends AbstractServiceTest {
         LocalDateTime secondVote = LocalDateTime.of(LocalDate.now(), LocalTime.of(11, 0));
         User newVote = UserTestData
                 .getUpdateWithVote(firstVote, ID + 1);
-        service.vote(newVote, ID + 1, firstVote);
+        service.vote(newVote.id(), ID + 1, firstVote);
 
         User reVote = UserTestData
                 .getUpdateWithVote(secondVote, ID + 2);
-        service.vote(reVote, ID + 2, secondVote);
+        service.vote(reVote.id(), ID + 2, secondVote);
 
         User expected = service.get(ID);
         assertThat(reVote)
@@ -124,12 +124,12 @@ public class UserServiceTest extends AbstractServiceTest {
         LocalDateTime secondVote = LocalDateTime.of(LocalDate.now(), LocalTime.of(13, 0));
         User newVote = UserTestData
                 .getUpdateWithVote(firstVote, ID + 1);
-        service.vote(newVote, ID + 1, firstVote);
+        service.vote(newVote.id(), ID + 1, firstVote);
 
         User reVote = UserTestData
                 .getUpdateWithVote(secondVote, ID + 2);
 
         Assertions.assertThrows(VotingTimeLimitException.class,
-                () -> service.vote(reVote, ID + 2, secondVote));
+                () -> service.vote(reVote.id(), ID + 2, secondVote));
     }
 }

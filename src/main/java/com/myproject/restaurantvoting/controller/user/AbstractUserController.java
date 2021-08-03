@@ -46,9 +46,4 @@ public abstract class AbstractUserController {
         log.info("delete {}", id);
         return userService.delete(id);
     }
-
-    public User vote(User user, int restaurantId) {
-        log.info("vote {}", restaurantId);
-        return userService.vote(user, restaurantId, LocalDateTime.now());
-    }
 }

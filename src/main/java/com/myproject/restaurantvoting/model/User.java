@@ -1,9 +1,13 @@
 package com.myproject.restaurantvoting.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.myproject.restaurantvoting.util.JsonDeserializers;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -46,6 +50,8 @@ public class User extends AbstractNamedEntity implements Serializable {
     private String email;
 
     @Column(name = "password", nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)//access only for write
+    @JsonDeserialize(using = JsonDeserializers.PasswordDeserializer.class)//encode pass to Bcript
     private String password;
 
     @Column(name = "enabled", nullable = false)
@@ -76,10 +82,5 @@ public class User extends AbstractNamedEntity implements Serializable {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
-    }
-
-    public String getRole() {
-        return getRoles().stream()
-                .findFirst().get().toString();
     }
 }
