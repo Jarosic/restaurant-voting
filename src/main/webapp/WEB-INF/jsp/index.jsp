@@ -6,7 +6,7 @@
 <body style="text-align: center">
     <h1>Restaurant Voting System</h1>
     <br>
-    <h3><a href="admin/users">users</a></h3>
-    <h3><a href="restaurants">restaurants</a></h3>
+    <h3><a href="api/admin/users">users</a></h3>
+    <h3><a href="api/restaurants">restaurants</a></h3>
 </body>
 </html>

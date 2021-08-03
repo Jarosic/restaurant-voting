@@ -13,11 +13,11 @@ import static com.myproject.restaurantvoting.model.AbstractBaseEntity.START_SEQ;
 public class UserTestData {
     private static final Integer USER_ID = START_SEQ;
     private static final Integer ADMIN_ID = START_SEQ + 1;
-    public static final User USER = new User(USER_ID, "User", "user@yandex.ru", "password", Role.USER);
-    public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", Role.ADMIN);
+    public static final User USER = new User(USER_ID, "User", "user@yandex.ru", "$2y$12$hmZpS1PiTi8c8cmhvZysdONis9H/OC0ogDRwUXk7p7wtAEIS2CWMW", Role.USER);
+    public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "$2y$12$n.ZyeC/XZhymQUZskag7j.29xuAQLA2IBLrk7svD6p.28.yMfLIdS", Role.ADMIN);
 
     public static User getNew() {
-        return new User(null, "New", "new@gmail.com", "newPass", Role.USER);
+        return new User(null, "New", "new@gmail.com", "$2y$12$tjAw8LHNY2C.pKDZkfYTj.E3YTmYws2cG6urB04sHQRcvgJ.6Uaza", Role.USER);
     }
 
     public static List<User> getUserList() {
@@ -31,7 +31,7 @@ public class UserTestData {
         User updated = USER;
         updated.setEmail("update@gmail.com");
         updated.setName("UpdatedName");
-        updated.setPassword("newPass");
+        updated.setPassword("$2y$12$tjAw8LHNY2C.pKDZkfYTj.E3YTmYws2cG6urB04sHQRcvgJ.6Uaza");
         updated.setEnabled(false);
         updated.setRoles(Collections.singletonList(Role.ADMIN));
         return updated;

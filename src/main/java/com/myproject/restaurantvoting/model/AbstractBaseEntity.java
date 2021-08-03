@@ -5,6 +5,7 @@ import org.springframework.data.util.ProxyUtils;
 import org.springframework.util.Assert;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class AbstractBaseEntity {
+public abstract class AbstractBaseEntity  implements Serializable {
     public static final int START_SEQ = 100000;
 
     @Id

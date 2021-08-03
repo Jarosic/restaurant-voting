@@ -25,7 +25,6 @@ public class UserServiceTest extends AbstractServiceTest {
     public void get() {
         User expected = service.get(ID);
         User actual = UserTestData.USER;
-        actual.setRegistered(expected.getRegistered());
         assertThat(actual).usingRecursiveComparison()
                 .ignoringFields("registered")
                 .isEqualTo(expected);

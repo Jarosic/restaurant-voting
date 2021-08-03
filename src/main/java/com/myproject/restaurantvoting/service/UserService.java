@@ -2,9 +2,14 @@ package com.myproject.restaurantvoting.service;
 
 import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.repository.UserRepository;
+import com.myproject.restaurantvoting.repository.UserRepositoryImpl;
+import com.myproject.restaurantvoting.security.SecurityUser;
 import com.myproject.restaurantvoting.util.VoteUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,7 +18,7 @@ import java.util.List;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class UserService {
+public class UserService implements UserDetailsService {
 
     public final UserRepository repository;
 
@@ -54,5 +59,15 @@ public class UserService {
     public User vote(User user, int restaurantId, LocalDateTime votingDateTime) {
         log.info("vote {}", restaurantId);
         return repository.save(VoteUtil.voteCreateUpdateHelper(user, restaurantId, votingDateTime));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User user = repository.getByEmail(email);
+
+        if (user == null) {
+            throw new UsernameNotFoundException("User not fount! email: " + email);
+        }
+        return new SecurityUser(user);
     }
 }

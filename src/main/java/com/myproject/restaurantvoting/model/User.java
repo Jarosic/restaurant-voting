@@ -7,6 +7,7 @@ import lombok.ToString;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.EnumSet;
@@ -29,7 +30,7 @@ import java.util.Set;
 @Data
 @Table(name = "users",
         uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
-public class User extends AbstractNamedEntity {
+public class User extends AbstractNamedEntity implements Serializable {
 
     public static final String GET_ALL = "User.getAll";
     public static final String BY_EMAIL = "User.getByEmail";
@@ -75,5 +76,10 @@ public class User extends AbstractNamedEntity {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
+    }
+
+    public String getRole() {
+        return getRoles().stream()
+                .findFirst().get().toString();
     }
 }
