@@ -38,7 +38,6 @@ public class AccountController {
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody User user, @AuthenticationPrincipal SecurityUser authUser) {
         log.info("PUT update {} to {}", authUser, user);
         User oldUser = authUser.getUser();
