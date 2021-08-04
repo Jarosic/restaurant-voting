@@ -13,22 +13,22 @@ public class AbstractMealController {
 
     public Meal get(int id) {
         Meal meal = service.get(id);
-        log.info("getMeal: {}", meal);
+        log.info("GET get meal by id: {}, meal: {}",id, meal);
         return meal;
     }
 
     public Meal create(Meal meal, int restaurantId) {
-        log.info("create {}", meal);
+        log.info("POST create meal: {}", meal);
         return service.create(meal, restaurantId);
     }
 
     public Meal update(Meal meal, int restaurantId, int id) {
-        log.info("update meal: {}, id: {}", meal, id);
+        log.info("PUT update meal: {}, id: {}", meal, id);
         return service.update(meal, restaurantId);
     }
 
     public boolean delete(int id) {
-        log.info("delete {}", id);
+        log.info("DELETE delete meal id: {}", id);
         return service.delete(id);
     }
 }

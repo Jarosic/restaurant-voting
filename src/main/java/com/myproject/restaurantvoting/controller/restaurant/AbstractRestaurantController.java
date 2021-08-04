@@ -21,33 +21,33 @@ public abstract class AbstractRestaurantController {
 
     public List<Restaurant> getAll() {
         List<Restaurant> restaurants = service.getAll();
-        log.info("getAllRestaurants: {}", restaurants);
+        log.info("GET get all restaurants Restaurants: {}", restaurants);
         return restaurants;
     }
 
     public Restaurant get(int id) {
         Restaurant restaurant = service.get(id);
-        log.info("get: {}", restaurant);
+        log.info("GET get restaurant by id: {}, restaurant: {}",id, restaurant);
         return restaurant;
     }
 
     public Restaurant create(Restaurant restaurant) {
-        log.info("create {}", restaurant);
+        log.info("POST create restaurant: {}", restaurant);
         return service.create(restaurant);
     }
 
     public Restaurant update(Restaurant restaurant, int id) {
-        log.info("update restaurant {}, id {}", restaurant, id);
+        log.info("PUT update restaurant {}, id {}", restaurant, id);
         return service.update(restaurant);
     }
 
     public boolean delete(int id) {
-        log.info("delete {}", id);
+        log.info("DELETE delete restaurant id:{}", id);
         return service.delete(id);
     }
 
     public User vote(Integer userId, int restaurantId) {
-        log.info("vote {}", restaurantId);
+        log.info("PATCH vote restaurantID: {}", restaurantId);
         return userService.vote(userId, restaurantId, LocalDateTime.now());
     }
 }
