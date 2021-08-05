@@ -2,6 +2,7 @@ package com.myproject.restaurantvoting.controller.restaurant;
 
 import com.myproject.restaurantvoting.model.Restaurant;
 import com.myproject.restaurantvoting.model.User;
+import com.myproject.restaurantvoting.security.SecurityUser;
 import com.myproject.restaurantvoting.service.RestaurantService;
 import com.myproject.restaurantvoting.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -46,8 +47,8 @@ public abstract class AbstractRestaurantController {
         return service.delete(id);
     }
 
-    public User vote(Integer userId, int restaurantId) {
+    public User vote(SecurityUser authUser, int restaurantId) {
         log.info("PATCH vote restaurantID: {}", restaurantId);
-        return userService.vote(userId, restaurantId, LocalDateTime.now());
+        return userService.vote(authUser.id(), restaurantId, LocalDateTime.now());
     }
 }

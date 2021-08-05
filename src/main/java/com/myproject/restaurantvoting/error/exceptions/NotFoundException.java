@@ -1,4 +1,4 @@
-package com.myproject.restaurantvoting.util.exception;
+package com.myproject.restaurantvoting.error.exceptions;
 
 public class NotFoundException extends RuntimeException{
 

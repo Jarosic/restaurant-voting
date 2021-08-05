@@ -2,7 +2,7 @@ package com.myproject.restaurantvoting.service;
 
 import com.myproject.restaurantvoting.data.UserTestData;
 import com.myproject.restaurantvoting.model.User;
-import com.myproject.restaurantvoting.util.exception.VotingTimeLimitException;
+import com.myproject.restaurantvoting.error.exceptions.VotingTimeLimitException;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -1,7 +1,7 @@
 package com.myproject.restaurantvoting.util;
 
 import com.myproject.restaurantvoting.model.User;
-import com.myproject.restaurantvoting.util.exception.VotingTimeLimitException;
+import com.myproject.restaurantvoting.error.exceptions.VotingTimeLimitException;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -38,7 +38,7 @@ public class VoteUtil {
                 updatedUser.setVotingDateTime(votingDateTime);
                 updatedUser.setRestaurantId(restaurantId);
             } else {
-                throw new VotingTimeLimitException();
+                throw new VotingTimeLimitException("You cannot vote more than once a day!");
             }
         }
         return updatedUser;
