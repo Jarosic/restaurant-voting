@@ -1,6 +1,7 @@
 package com.myproject.restaurantvoting.controller.user;
 
 import com.myproject.restaurantvoting.model.User;
+import com.myproject.restaurantvoting.util.ValidationUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,7 @@ public class UserController extends AbstractUserController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<User> createWithLocation(@RequestBody User user) {
+        ValidationUtil.checkNew(user);
         User created = super.create(user);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
@@ -47,15 +49,16 @@ public class UserController extends AbstractUserController {
         return super.getByEmail(email);
     }
 
+    @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public User update(@RequestBody User user, @PathVariable int id) {
-        log.info("PUT {}" + user.getPassword());
+        ValidationUtil.assureIdConsistent(user, id);
         return super.update(user, id);
     }
 
     @Override
     @DeleteMapping("/{id}")
     public boolean delete(@PathVariable int id) {
-       return super.delete(id);
+        return super.delete(id);
     }
  }

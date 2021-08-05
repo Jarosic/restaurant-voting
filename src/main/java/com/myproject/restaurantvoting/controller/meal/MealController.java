@@ -1,6 +1,7 @@
 package com.myproject.restaurantvoting.controller.meal;
 
 import com.myproject.restaurantvoting.model.Meal;
+import com.myproject.restaurantvoting.util.ValidationUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +13,10 @@ import java.net.URI;
 @RestController
 @RequestMapping(value = MealController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class MealController extends AbstractMealController {
+
     public static final String REST_URL = "api/meals";
 
+    @Override
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Meal get(@PathVariable int id) {
         return super.get(id);
@@ -21,6 +24,7 @@ public class MealController extends AbstractMealController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Meal> createWithLocation(@RequestBody Meal meal, @RequestParam int restaurantId) {
+        ValidationUtil.checkNew(meal);
         Meal created = super.create(meal, restaurantId);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
@@ -31,6 +35,7 @@ public class MealController extends AbstractMealController {
     @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Meal update(@RequestBody Meal meal, @RequestParam int restaurantId, @PathVariable int id) {
+        ValidationUtil.assureIdConsistent(meal, id);
         return super.update(meal, restaurantId, id);
     }
 

@@ -3,7 +3,9 @@ package com.myproject.restaurantvoting.controller.restaurant;
 import com.myproject.restaurantvoting.model.Restaurant;
 import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.security.SecurityUser;
+import com.myproject.restaurantvoting.util.ValidationUtil;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,6 +16,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@Slf4j
 @RequestMapping(value = RestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestaurantController extends AbstractRestaurantController {
 
@@ -25,14 +28,15 @@ public class RestaurantController extends AbstractRestaurantController {
         return super.getAll();
     }
 
+    @Override
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public Restaurant get(@PathVariable int id) {
         return super.get(id);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> createWithLocation(@RequestBody Restaurant restaurant
-    ) {
+    public ResponseEntity<Restaurant> createWithLocation(@RequestBody Restaurant restaurant) {
+        ValidationUtil.checkNew(restaurant);
         Restaurant created = super.create(restaurant);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
@@ -40,9 +44,11 @@ public class RestaurantController extends AbstractRestaurantController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
+    @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Restaurant update(@RequestBody Restaurant restaurant, @PathVariable int id) {
-        return super.update(restaurant,id);
+        ValidationUtil.assureIdConsistent(restaurant, id);
+        return super.update(restaurant, id);
     }
 
     @Override

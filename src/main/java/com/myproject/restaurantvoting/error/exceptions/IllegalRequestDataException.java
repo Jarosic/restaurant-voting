@@ -6,9 +6,9 @@ import org.springframework.http.HttpStatus;
 
 import static org.springframework.boot.web.error.ErrorAttributeOptions.Include.MESSAGE;
 
-public class NotFoundException extends AppException {
+public class IllegalRequestDataException extends AppException {
 
-    public NotFoundException(String msg){
-        super(HttpStatus.NOT_FOUND, msg, ErrorAttributeOptions.of(MESSAGE));
+    public IllegalRequestDataException(String msg) {
+        super(HttpStatus.UNPROCESSABLE_ENTITY, msg, ErrorAttributeOptions.of(MESSAGE));
     }
 }
