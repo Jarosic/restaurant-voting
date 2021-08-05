@@ -35,7 +35,6 @@ public class UserController extends AbstractUserController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<User> createWithLocation(@RequestBody User user) {
-        ValidationUtil.checkNew(user);
         User created = super.create(user);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
@@ -52,7 +51,6 @@ public class UserController extends AbstractUserController {
     @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public User update(@RequestBody User user, @PathVariable int id) {
-        ValidationUtil.assureIdConsistent(user, id);
         return super.update(user, id);
     }
 

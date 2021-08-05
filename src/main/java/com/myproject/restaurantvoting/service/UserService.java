@@ -4,6 +4,7 @@ import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.repository.UserRepository;
 import com.myproject.restaurantvoting.repository.UserRepositoryImpl;
 import com.myproject.restaurantvoting.security.SecurityUser;
+import com.myproject.restaurantvoting.util.ValidationUtil;
 import com.myproject.restaurantvoting.util.VoteUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,43 +43,40 @@ public class UserService implements UserDetailsService {
 
     public User create(User user) {
         log.info("create {}", user);
+        ValidationUtil.checkNew(user);
         return repository.save(user);
     }
 
     public User update(User user, int id) {
         log.info("update user: {}, id: {}", user, id);
-
+        ValidationUtil.assureIdConsistent(user, id);
         if (user.getPassword() == null) {
             User u = repository.get(id);
             user.setPassword(u.getPassword());
         }
-
         user.setId(id);
         return repository.save(user);
     }
 
     public boolean delete(int id) {
         log.info("delete {}", id);
-       return repository.delete(id);
+        return repository.delete(id);
     }
 
     public User vote(Integer userId, int restaurantId, LocalDateTime votingDateTime) {
         log.info("vote {}", restaurantId);
         User user = new User();
-
         if (userId != null) {
             user = repository.get(userId);
         }
-
         return repository.save(VoteUtil.voteCreateUpdateHelper(user, restaurantId, votingDateTime));
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = repository.getByEmail(email);
-
         if (user == null) {
-            throw new UsernameNotFoundException("User not fount! email: " + email);
+            throw new UsernameNotFoundException("User not found! email: " + email);
         }
         return new SecurityUser(user);
     }
