@@ -20,7 +20,7 @@ public abstract class AbstractUserController {
         return users;
     }
 
-    public User get(int id) {
+    public User get(int id) throws Throwable {
         User user = userService.get(id);
         log.info("GET get user by id: {}, user: {}",id, user);
         return user;

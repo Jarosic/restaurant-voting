@@ -1,5 +1,6 @@
 package com.myproject.restaurantvoting.service;
 
+import com.myproject.restaurantvoting.error.exceptions.NotFoundException;
 import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.repository.UserRepository;
 import com.myproject.restaurantvoting.repository.UserRepositoryImpl;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -32,10 +34,14 @@ public class UserService implements UserDetailsService {
     public User get(int id) {
         User user = repository.get(id);
         log.info("get: {}", user);
+        if (user == null) {
+            throw new NotFoundException("User with id = " + id + ", is not found!");
+        }
         return user;
     }
 
     public User getByEmail(String email) {
+        System.out.println("getByEmail: " + email);
         User user = repository.getByEmail(email);
         log.info("getByEmail: {}", user);
         return user;

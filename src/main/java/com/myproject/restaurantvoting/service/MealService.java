@@ -1,5 +1,6 @@
 package com.myproject.restaurantvoting.service;
 
+import com.myproject.restaurantvoting.error.exceptions.NotFoundException;
 import com.myproject.restaurantvoting.model.Meal;
 import com.myproject.restaurantvoting.repository.MealRepository;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,9 @@ public class MealService {
     public Meal get(int id) {
         Meal meal = repository.get(id);
         log.info("getMeal: {}", meal);
+        if (meal == null) {
+            throw  new NotFoundException("Meal with id = " + id + ", is not found!");
+        }
         return meal;
     }
 

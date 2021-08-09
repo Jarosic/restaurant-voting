@@ -1,5 +1,6 @@
 package com.myproject.restaurantvoting.service;
 
+import com.myproject.restaurantvoting.error.exceptions.NotFoundException;
 import com.myproject.restaurantvoting.model.Restaurant;
 import com.myproject.restaurantvoting.repository.RestaurantRepository;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,9 @@ public class RestaurantService {
     public Restaurant get(int id) {
         Restaurant restaurant = repository.get(id);
         log.info("get: {}", restaurant);
+        if (restaurant == null) {
+            throw  new NotFoundException("Restaurant with id = " + id + ", is not found!");
+        }
         return restaurant;
     }
 

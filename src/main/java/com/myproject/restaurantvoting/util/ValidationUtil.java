@@ -1,7 +1,10 @@
 package com.myproject.restaurantvoting.util;
 
 import com.myproject.restaurantvoting.error.exceptions.IllegalRequestDataException;
+import com.myproject.restaurantvoting.error.exceptions.NotFoundException;
 import com.myproject.restaurantvoting.model.AbstractBaseEntity;
+
+import java.util.Optional;
 
 public class ValidationUtil {
 

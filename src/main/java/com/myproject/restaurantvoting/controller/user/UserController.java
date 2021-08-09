@@ -28,7 +28,7 @@ public class UserController extends AbstractUserController {
 
     @Override
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public User get(@PathVariable int id) {
+    public User get(@PathVariable int id) throws Throwable {
         return super.get(id);
     }
 
