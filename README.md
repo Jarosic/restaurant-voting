@@ -16,7 +16,7 @@ If it is after 11:00 then it is too late, vote can't be changed
 Each restaurant provides a new menu each day.
 
 Swagger:
-http://localhost:8080/swagger-ui/index.html
+http://localhost:8080/swagger-ui.html
 
 ADMIN:
 username: admin@gmail.com;
