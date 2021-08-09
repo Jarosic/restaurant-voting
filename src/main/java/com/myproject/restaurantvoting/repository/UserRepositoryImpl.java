@@ -2,6 +2,7 @@ package com.myproject.restaurantvoting.repository;
 
 
 import com.myproject.restaurantvoting.model.User;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

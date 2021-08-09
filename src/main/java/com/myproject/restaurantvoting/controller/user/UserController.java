@@ -2,6 +2,7 @@ package com.myproject.restaurantvoting.controller.user;
 
 import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.util.ValidationUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
+@Tag(name = "User Controller")
 @RequestMapping(value = UserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController extends AbstractUserController {
 

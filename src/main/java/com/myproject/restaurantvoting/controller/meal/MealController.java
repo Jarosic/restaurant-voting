@@ -2,6 +2,7 @@ package com.myproject.restaurantvoting.controller.meal;
 
 import com.myproject.restaurantvoting.model.Meal;
 import com.myproject.restaurantvoting.util.ValidationUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
+@Tag(name = "Meal Controller")
 @RequestMapping(value = MealController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class MealController extends AbstractMealController {
 

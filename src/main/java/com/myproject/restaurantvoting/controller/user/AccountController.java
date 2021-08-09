@@ -5,6 +5,7 @@ import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.security.SecurityUser;
 import com.myproject.restaurantvoting.service.UserService;
 import com.myproject.restaurantvoting.util.ValidationUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.Set;
 @RestController
 @AllArgsConstructor
 @Slf4j
+@Tag(name = "Account Controller")
 @RequestMapping(value = "/api/account")
 public class AccountController {
 

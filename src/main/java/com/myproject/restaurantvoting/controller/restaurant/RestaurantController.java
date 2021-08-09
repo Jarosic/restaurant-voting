@@ -4,6 +4,7 @@ import com.myproject.restaurantvoting.model.Restaurant;
 import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.security.SecurityUser;
 import com.myproject.restaurantvoting.util.ValidationUtil;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
+@Tag(name = "Restaurants Controller")
 @RequestMapping(value = RestaurantController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestaurantController extends AbstractRestaurantController {
 
