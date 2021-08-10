@@ -46,12 +46,12 @@ public class AccountController {
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void update(@RequestBody User user, @AuthenticationPrincipal SecurityUser authUser) {
+    public User update(@RequestBody User user, @AuthenticationPrincipal SecurityUser authUser) {
         log.info("PUT update {} to {}", authUser, user);
         User oldUser = authUser.getUser();
         ValidationUtil.assureIdConsistent(user, oldUser.id());
         user.setRoles(oldUser.getRoles());
-        userService.update(user, authUser.id());
+        return userService.update(user, authUser.id());
     }
 
     @DeleteMapping

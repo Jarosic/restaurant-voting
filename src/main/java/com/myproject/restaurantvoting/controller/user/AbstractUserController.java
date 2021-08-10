@@ -5,7 +5,6 @@ import com.myproject.restaurantvoting.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j

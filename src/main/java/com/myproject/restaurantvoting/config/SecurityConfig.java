@@ -76,9 +76,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //https://stackoverflow.com/questions/37671125/how-to-configure-spring-security-to-allow-swagger-url-to-be-accessed-without-aut
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring()
-                .antMatchers("/api/account/register", "/api/account/register")
-                .antMatchers(HttpMethod.GET, "api/restaurants/**");
-
+        web.ignoring().antMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**");
     }
 }
