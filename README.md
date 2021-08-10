@@ -14,3 +14,15 @@ If user votes again the same day:
 If it is before 11:00 we assume that he changed his mind.
 If it is after 11:00 then it is too late, vote can't be changed
 Each restaurant provides a new menu each day.
+
+Swagger:
+http://localhost:8080/swagger-ui.html
+
+ADMIN:
+username: admin@gmail.com;
+password: admin;
+
+USER:
+username: user@yandex.ru;
+password: user.
+
