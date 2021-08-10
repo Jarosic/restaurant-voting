@@ -8,7 +8,7 @@ import lombok.Getter;
 public class SecurityUser extends org.springframework.security.core.userdetails.User {
 
     @NotNull
-    private User user;
+    private final User user;
 
     public SecurityUser(User user) {
         super(user.getEmail(), user.getPassword(), user.getRoles());
@@ -18,5 +18,4 @@ public class SecurityUser extends org.springframework.security.core.userdetails.
     public int id() {
         return user.id();
     }
-
 }

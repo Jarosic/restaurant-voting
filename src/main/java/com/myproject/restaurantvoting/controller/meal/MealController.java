@@ -3,7 +3,7 @@ package com.myproject.restaurantvoting.controller.meal;
 import com.myproject.restaurantvoting.model.Meal;
 import com.myproject.restaurantvoting.util.ValidationUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +43,7 @@ public class MealController extends AbstractMealController {
 
     @Override
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public boolean delete(@PathVariable int id) {
         return super.delete(id);
     }

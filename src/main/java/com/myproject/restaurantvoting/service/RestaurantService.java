@@ -1,8 +1,8 @@
 package com.myproject.restaurantvoting.service;
 
-import com.myproject.restaurantvoting.error.exceptions.NotFoundException;
 import com.myproject.restaurantvoting.model.Restaurant;
 import com.myproject.restaurantvoting.repository.RestaurantRepository;
+import com.myproject.restaurantvoting.util.ValidationUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -25,9 +25,7 @@ public class RestaurantService {
     public Restaurant get(int id) {
         Restaurant restaurant = repository.get(id);
         log.info("get: {}", restaurant);
-        if (restaurant == null) {
-            throw  new NotFoundException("Restaurant with id = " + id + ", is not found!");
-        }
+        ValidationUtil.checkForExist(restaurant, id, Restaurant.class);
         return restaurant;
     }
 

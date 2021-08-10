@@ -13,7 +13,7 @@ import static com.myproject.restaurantvoting.model.AbstractBaseEntity.START_SEQ;
 public class UserTestData {
     private static final Integer USER_ID = START_SEQ;
     private static final Integer ADMIN_ID = START_SEQ + 1;
-    public static final User USER = new User(USER_ID, "User", "user@yandex.ru", "$2y$12$hmZpS1PiTi8c8cmhvZysdONis9H/OC0ogDRwUXk7p7wtAEIS2CWMW", Role.USER);
+    public static final User USER = new User(USER_ID, "User", "user@gmail.com", "$2y$12$hmZpS1PiTi8c8cmhvZysdONis9H/OC0ogDRwUXk7p7wtAEIS2CWMW", Role.USER);
     public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "$2y$12$n.ZyeC/XZhymQUZskag7j.29xuAQLA2IBLrk7svD6p.28.yMfLIdS", Role.ADMIN);
 
     public static User getNew() {

@@ -5,8 +5,8 @@ import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.security.SecurityUser;
 import com.myproject.restaurantvoting.util.ValidationUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -55,12 +55,14 @@ public class RestaurantController extends AbstractRestaurantController {
 
     @Override
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public boolean delete(@PathVariable int id) {
         return super.delete(id);
     }
 
     @Override
-    @PatchMapping(value = "/vote", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PatchMapping(value = "/vote")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public User vote(@AuthenticationPrincipal SecurityUser authUser, @RequestParam int restaurantId) {
         return super.vote(authUser, restaurantId);
     }

@@ -1,9 +1,7 @@
 package com.myproject.restaurantvoting.controller.user;
 
 import com.myproject.restaurantvoting.model.User;
-import com.myproject.restaurantvoting.util.ValidationUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -58,7 +56,8 @@ public class UserController extends AbstractUserController {
 
     @Override
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public boolean delete(@PathVariable int id) {
         return super.delete(id);
     }
- }
+}
