@@ -17,7 +17,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -38,12 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService() {
         return email -> {
             log.info("Authenticating {} ", email);
-
             User user = userRepository.getByEmail(email);
-
-            if (user == null) {
-                throw new UsernameNotFoundException("User " + email + "was not found!");
-            }
             return new SecurityUser(user);
         };
     }
@@ -76,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //https://stackoverflow.com/questions/37671125/how-to-configure-spring-security-to-allow-swagger-url-to-be-accessed-without-aut
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**");
+        web.ignoring()
+                .antMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**");//disable swagger security
     }
 }
