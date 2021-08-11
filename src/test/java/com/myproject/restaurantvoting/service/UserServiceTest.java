@@ -1,8 +1,8 @@
 package com.myproject.restaurantvoting.service;
 
 import com.myproject.restaurantvoting.data.UserTestData;
-import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.error.exceptions.VotingTimeLimitException;
+import com.myproject.restaurantvoting.model.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -44,7 +44,7 @@ public class UserServiceTest extends AbstractServiceTest {
     @Test
     @Order(3)
     public void getByEmail() {
-        User expected = service.getByEmail("user@yandex.ru");
+        User expected = service.getByEmail("user@gmail.com");
         User actual = UserTestData.USER;
         assertThat(actual).
                 usingRecursiveComparison().
@@ -67,7 +67,7 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     @Override
-    @Order(5)
+    @Order(11)
     public void update() {
         User update = UserTestData.getUpdate();
         service.update(update, ID);
@@ -85,6 +85,7 @@ public class UserServiceTest extends AbstractServiceTest {
     }
 
     @Test
+    @Order(5)
     public void voteNew() {
         User update = UserTestData
                 .getUpdateWithVote(null, ID + 1);
