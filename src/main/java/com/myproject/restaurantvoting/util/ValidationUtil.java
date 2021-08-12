@@ -3,8 +3,6 @@ package com.myproject.restaurantvoting.util;
 import com.myproject.restaurantvoting.error.exceptions.IllegalRequestDataException;
 import com.myproject.restaurantvoting.error.exceptions.NotFoundException;
 import com.myproject.restaurantvoting.model.AbstractBaseEntity;
-import com.myproject.restaurantvoting.model.AbstractNamedEntity;
-import com.myproject.restaurantvoting.model.Restaurant;
 import com.myproject.restaurantvoting.model.User;
 
 public class ValidationUtil {
