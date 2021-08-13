@@ -35,7 +35,7 @@ public class UserControllerTest extends AbstractControllerTest{
     @WithMockUser(roles = "ADMIN")
     public void getAll() throws Exception {
         when(userService.getAll()).thenReturn(UserTestData.getUserList());
-        MvcResult result = mockMvc.perform(get(REST_URL))
+        MvcResult result = perform(get(REST_URL))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
@@ -51,7 +51,7 @@ public class UserControllerTest extends AbstractControllerTest{
         User newUser = UserTestData.getNew();
         newUser.setId(USER_ID + 12);
         when(userService.create(any(User.class))).thenReturn(newUser);
-        MvcResult result = mockMvc.perform(post(REST_URL)
+        MvcResult result = perform(post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(newUser)))
                 .andExpect(jsonPath("$.roles").value("USER"))
@@ -70,7 +70,7 @@ public class UserControllerTest extends AbstractControllerTest{
         String url = REST_URL + "/" + USER_ID;
         User user = UserTestData.USER;
         when(userService.get(USER_ID)).thenReturn(user);
-        MvcResult result = mockMvc.perform(get(url)
+        MvcResult result = perform(get(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
@@ -88,7 +88,7 @@ public class UserControllerTest extends AbstractControllerTest{
         User admin = UserTestData.ADMIN;
         String url = REST_URL + "/by?email=" + admin.getEmail();
         when(userService.getByEmail(admin.getEmail())).thenReturn(admin);
-        MvcResult result = mockMvc.perform(get(url)
+        MvcResult result = perform(get(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(admin)))
                 .andExpect(status().isOk())
@@ -127,7 +127,7 @@ public class UserControllerTest extends AbstractControllerTest{
     public void delete() throws Exception {
         String url = REST_URL + "/" + USER_ID;
         when(userService.delete(USER_ID)).thenReturn(true);
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.delete(url)
+        MvcResult result = perform(MockMvcRequestBuilders.delete(url)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andDo(print())

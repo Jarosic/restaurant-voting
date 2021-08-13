@@ -31,11 +31,14 @@ public class RestaurantControllerTest extends AbstractControllerTest {
     @MockBean
     private RestaurantService restaurantService;
 
+//    @MockBean
+//    private UserService userService;
+
     @Test
     @WithMockUser(roles = "USER")
     public void getAll() throws Exception {
         when(restaurantService.getAll()).thenReturn(RestaurantTestData.restaurants);
-        MvcResult result = mockMvc.perform(get(REST_URL))
+        MvcResult result = perform(get(REST_URL))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
@@ -50,7 +53,7 @@ public class RestaurantControllerTest extends AbstractControllerTest {
     public void create() throws Exception {
         Restaurant newRestaurant = RestaurantTestData.getNew();
         when(restaurantService.create(any(Restaurant.class))).thenReturn(newRestaurant);
-        MvcResult result = mockMvc.perform(post(REST_URL)
+        MvcResult result = perform(post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(newRestaurant)))
                 .andExpect(jsonPath("$.name").value("Pivoman"))
@@ -68,7 +71,7 @@ public class RestaurantControllerTest extends AbstractControllerTest {
         String url = REST_URL + "/" + ID;
         Restaurant restaurant = RestaurantTestData.BARTOLOMEO;
         when(restaurantService.get(ID)).thenReturn(restaurant);
-        MvcResult result = mockMvc.perform(get(url)
+        MvcResult result = perform(get(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(restaurant)))
                 .andExpect(status().isOk())
@@ -87,7 +90,7 @@ public class RestaurantControllerTest extends AbstractControllerTest {
         Restaurant updated = RestaurantTestData.getUpdate();
         updated.setId(ID);
         when(restaurantService.update(updated)).thenReturn(updated);
-        MvcResult result = mockMvc.perform(put(url)
+        MvcResult result = perform(put(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(updated)))
                 .andExpect(jsonPath("$.name").value("Sky"))
@@ -105,11 +108,28 @@ public class RestaurantControllerTest extends AbstractControllerTest {
     public void delete() throws Exception {
         String url = REST_URL + "/" + ID;
         when(restaurantService.delete(ID)).thenReturn(true);
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.delete(url)
+        MvcResult result = perform(MockMvcRequestBuilders.delete(url)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andDo(print())
                 .andReturn();
         Assertions.assertTrue(Boolean.parseBoolean(result.getResponse().getContentAsString()));
     }
+
+//    @Test
+//    @WithMockUser(roles = "USER")
+//    public void vote() throws Exception {
+//        String url = REST_URL + "/vote?restaurantId=" + RestaurantTestData.BARTOLOMEO.id();
+//        Restaurant restaurant = RestaurantTestData.BARTOLOMEO;
+//        LocalDateTime voteDateTime = LocalDateTime.now();
+//        User userWithVote = UserTestData.getUpdateWithVote(voteDateTime, restaurant.getId());
+//        //when(userService.vote(null, restaurant.getId(), voteDateTime)).thenReturn(userWithVote);
+//        when(userService.vote(any(Integer.class), any(Integer.class), any(LocalDateTime.class)))
+//                .thenReturn(userWithVote);
+//        perform(patch(url)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(objectMapper.writeValueAsString(userWithVote)))
+//                .andExpect(status().isOk())
+//                .andDo(print());
+//    }
 }

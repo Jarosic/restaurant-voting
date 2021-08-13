@@ -39,18 +39,14 @@ public class MealControllerTest extends AbstractControllerTest {
     public void create() throws Exception {
         String url = REST_URL + "?restaurantId=" + RESTAURANT_ID;
         Meal newMeal = MealTestData.getNew();
-
-        //when(mealService.create(newMeal, RESTAURANT_ID)).thenReturn(newMeal);
         when(mealService.create(any(Meal.class), any(Integer.class))).thenReturn(newMeal);
-
-        MvcResult result = mockMvc.perform(post(url)
+        MvcResult result = perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(newMeal)))
                 .andExpect(jsonPath("$.description").value("Coconut"))
                 .andExpect(status().isCreated())
                 .andDo(print())
                 .andReturn();
-
         String actual = result.getResponse().getContentAsString();
         String expected = objectMapper.writeValueAsString(newMeal);
         Assertions.assertEquals(expected, actual);
@@ -62,7 +58,7 @@ public class MealControllerTest extends AbstractControllerTest {
         String url = REST_URL + "/" + ID;
         Meal meal = MealTestData.meal;
         when(mealService.get(ID)).thenReturn(meal);
-        MvcResult result = mockMvc.perform(get(url)
+        MvcResult result = perform(get(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(meal)))
                 .andExpect(status().isOk())
@@ -81,7 +77,7 @@ public class MealControllerTest extends AbstractControllerTest {
         Meal updated = MealTestData.getUpdate();
         updated.setId(ID);
         when(mealService.update(updated, RESTAURANT_ID)).thenReturn(updated);
-        MvcResult result = mockMvc.perform(put(url)
+        MvcResult result = perform(put(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(updated)))
                 .andExpect(jsonPath("$.description").value("Coca-cola"))
@@ -99,7 +95,7 @@ public class MealControllerTest extends AbstractControllerTest {
     public void delete() throws Exception {
         String url = REST_URL + "/" + ID;
         when(mealService.delete(ID)).thenReturn(true);
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.delete(url)
+        MvcResult result = perform(MockMvcRequestBuilders.delete(url)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andDo(print())
