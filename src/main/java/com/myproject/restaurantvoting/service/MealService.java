@@ -1,6 +1,5 @@
 package com.myproject.restaurantvoting.service;
 
-import com.myproject.restaurantvoting.error.exceptions.NotFoundException;
 import com.myproject.restaurantvoting.model.Meal;
 import com.myproject.restaurantvoting.repository.MealRepository;
 import com.myproject.restaurantvoting.util.ValidationUtil;

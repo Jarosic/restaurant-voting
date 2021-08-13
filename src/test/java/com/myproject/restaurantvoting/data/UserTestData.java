@@ -31,9 +31,7 @@ public class UserTestData {
         User updated = USER;
         updated.setEmail("update@gmail.com");
         updated.setName("UpdatedName");
-        updated.setPassword("$2y$12$tjAw8LHNY2C.pKDZkfYTj.E3YTmYws2cG6urB04sHQRcvgJ.6Uaza");
-        updated.setEnabled(false);
-        updated.setRoles(Collections.singletonList(Role.ADMIN));
+        updated.setPassword("test");
         return updated;
     }
 
