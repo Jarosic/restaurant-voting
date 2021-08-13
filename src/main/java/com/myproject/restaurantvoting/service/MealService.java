@@ -6,6 +6,8 @@ import com.myproject.restaurantvoting.repository.MealRepository;
 import com.myproject.restaurantvoting.util.ValidationUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -22,16 +24,19 @@ public class MealService {
         return meal;
     }
 
+    @CachePut("restaurants")
     public Meal create(Meal meal, int restaurantId) {
         log.info("create {}", meal);
         return repository.save(meal, restaurantId);
     }
 
+    @CachePut("restaurants")
     public Meal update(Meal meal, int restaurantId) {
         log.info("update {}", meal);
         return repository.save(meal, restaurantId);
     }
 
+    @CacheEvict(value = "restaurants", allEntries = true)
     public boolean delete(int id) {
         log.info("delete {}", id);
         return repository.delete(id);

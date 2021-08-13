@@ -15,7 +15,7 @@
     <description>Restaurant Voting</description>
     <packaging>war</packaging>
     <properties>
-        <java.version>11</java.version>
+        <java.version>15</java.version>
         <springdoc.version>1.5.6</springdoc.version>
     </properties>
 
@@ -76,6 +76,16 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-security</artifactId>
             <version>${springdoc.version}</version>
+        </dependency>
+
+        <!--cache-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
         </dependency>
 
         <!--tests-->

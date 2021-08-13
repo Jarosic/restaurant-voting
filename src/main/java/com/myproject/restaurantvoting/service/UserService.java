@@ -1,6 +1,5 @@
 package com.myproject.restaurantvoting.service;
 
-import com.myproject.restaurantvoting.error.exceptions.NotFoundException;
 import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.repository.UserRepository;
 import com.myproject.restaurantvoting.security.SecurityUser;
@@ -8,6 +7,9 @@ import com.myproject.restaurantvoting.util.ValidationUtil;
 import com.myproject.restaurantvoting.util.VoteUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,6 +25,7 @@ public class UserService implements UserDetailsService {
 
     public final UserRepository repository;
 
+    @Cacheable("users")
     public List<User> getAll() {
         List<User> users = repository.getAll();
         log.info("getAllUsers: {}", users);
@@ -36,6 +39,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    @Cacheable(value = "users")
     public User getByEmail(String email) {
         System.out.println("getByEmail: " + email);
         User user = repository.getByEmail(email);
@@ -44,12 +48,14 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+    @CachePut(value = "users", key = "#user.email")
     public User create(User user) {
         log.info("create {}", user);
         ValidationUtil.checkNew(user);
         return repository.save(user);
     }
 
+    @CachePut(value = "users", key = "#user.email")
     public User update(User user, int id) {
         log.info("update user: {}, id: {}", user, id);
         ValidationUtil.assureIdConsistent(user, id);
@@ -61,11 +67,13 @@ public class UserService implements UserDetailsService {
         return repository.save(user);
     }
 
+    @CacheEvict("users")
     public boolean delete(int id) {
         log.info("delete {}", id);
         return repository.delete(id);
     }
 
+    @CachePut("users")
     public User vote(Integer userId, int restaurantId, LocalDateTime votingDateTime) {
         log.info("vote {}", restaurantId);
         User user = new User();
@@ -76,6 +84,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
+    @Cacheable("users")
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = repository.getByEmail(email);
         if (user == null) {

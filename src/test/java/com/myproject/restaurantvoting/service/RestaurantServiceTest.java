@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class RestaurantServiceTest extends AbstractServiceTest {
 
@@ -68,5 +68,4 @@ public class RestaurantServiceTest extends AbstractServiceTest {
         restaurantService.delete(ID + 1);
         Assertions.assertThrows(NotFoundException.class, () -> restaurantService.get(ID + 1));
     }
-
 }
