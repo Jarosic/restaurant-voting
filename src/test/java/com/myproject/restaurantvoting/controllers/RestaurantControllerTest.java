@@ -31,9 +31,6 @@ public class RestaurantControllerTest extends AbstractControllerTest {
     @MockBean
     private RestaurantService restaurantService;
 
-//    @MockBean
-//    private UserService userService;
-
     @Test
     @WithMockUser(roles = "USER")
     public void getAll() throws Exception {
@@ -115,21 +112,4 @@ public class RestaurantControllerTest extends AbstractControllerTest {
                 .andReturn();
         Assertions.assertTrue(Boolean.parseBoolean(result.getResponse().getContentAsString()));
     }
-
-//    @Test
-//    @WithMockUser(roles = "USER")
-//    public void vote() throws Exception {
-//        String url = REST_URL + "/vote?restaurantId=" + RestaurantTestData.BARTOLOMEO.id();
-//        Restaurant restaurant = RestaurantTestData.BARTOLOMEO;
-//        LocalDateTime voteDateTime = LocalDateTime.now();
-//        User userWithVote = UserTestData.getUpdateWithVote(voteDateTime, restaurant.getId());
-//        //when(userService.vote(null, restaurant.getId(), voteDateTime)).thenReturn(userWithVote);
-//        when(userService.vote(any(Integer.class), any(Integer.class), any(LocalDateTime.class)))
-//                .thenReturn(userWithVote);
-//        perform(patch(url)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(objectMapper.writeValueAsString(userWithVote)))
-//                .andExpect(status().isOk())
-//                .andDo(print());
-//    }
 }
