@@ -60,10 +60,10 @@ public class RestaurantController extends AbstractRestaurantController {
         return super.delete(id);
     }
 
-    @Override
-    @PatchMapping(value = "/vote")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public User vote(@AuthenticationPrincipal SecurityUser authUser, @RequestParam int restaurantId) {
-        return super.vote(authUser, restaurantId);
-    }
+//    @Override
+//    @PatchMapping(value = "/vote")
+//    @ResponseStatus(HttpStatus.NO_CONTENT)
+//    public User vote(@AuthenticationPrincipal SecurityUser authUser, @RequestParam int restaurantId) {
+//        return super.vote(authUser, restaurantId);
+//    }
 }

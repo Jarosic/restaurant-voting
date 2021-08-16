@@ -1,5 +1,6 @@
 package com.myproject.restaurantvoting.service;
 
+import com.myproject.restaurantvoting.error.exceptions.NotFoundException;
 import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.repository.UserRepository;
 import com.myproject.restaurantvoting.security.SecurityUser;
@@ -27,23 +28,24 @@ public class UserService implements UserDetailsService {
 
     @Cacheable("users")
     public List<User> getAll() {
-        List<User> users = repository.getAll();
+        List<User> users = repository.findAll();
         log.info("getAllUsers: {}", users);
         return users;
     }
 
+    @Cacheable(value = "users")
     public User get(int id) {
-        User user = repository.get(id);
+        User user = repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("User with id = " + id + ", is not exist!"));
         log.info("get: {}", user);
-        ValidationUtil.checkForExist(user, id, User.class);
         return user;
     }
 
     @Cacheable(value = "users")
     public User getByEmail(String email) {
         System.out.println("getByEmail: " + email);
-        User user = repository.getByEmail(email);
-        ValidationUtil.checkUserByEmail(user, email);
+        User user = repository.findByEmailIgnoreCase(email)
+                .orElseThrow(() -> new NotFoundException("User with email = " + email + ", is not exist!"));
         log.info("getByEmail: {}", user);
         return user;
     }
@@ -60,17 +62,18 @@ public class UserService implements UserDetailsService {
         log.info("update user: {}, id: {}", user, id);
         ValidationUtil.assureIdConsistent(user, id);
         if (user.getPassword() == null) {
-            User u = repository.get(id);
+            User u = repository.findById(id)
+                    .orElseThrow(() -> new NotFoundException("User with id = " + id + ", is not exist!"));
             user.setPassword(u.getPassword());
         }
         user.setId(id);
         return repository.save(user);
     }
 
-    @CacheEvict("users")
-    public boolean delete(int id) {
+    @CacheEvict(value = "users", allEntries = true)
+    public void delete(Integer id) {
         log.info("delete {}", id);
-        return repository.delete(id);
+        repository.deleteById(id);
     }
 
     @CachePut("users")
@@ -78,7 +81,9 @@ public class UserService implements UserDetailsService {
         log.info("vote {}", restaurantId);
         User user = new User();
         if (userId != null) {
-            user = repository.get(userId);
+            User u = repository.findById(userId)
+                    .orElseThrow(() -> new NotFoundException("User with id = " + userId + ", is not exist!"));
+            user = u;
         }
         return repository.save(VoteUtil.voteCreateUpdateHelper(user, restaurantId, votingDateTime));
     }
@@ -86,10 +91,9 @@ public class UserService implements UserDetailsService {
     @Override
     @Cacheable("users")
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = repository.getByEmail(email);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found! email: " + email);
-        }
+        log.info("loadUserByUsername email: {}", email);
+        User user = repository.findByEmailIgnoreCase(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found! email: " + email));
         return new SecurityUser(user);
     }
 }

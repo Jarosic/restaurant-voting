@@ -19,30 +19,30 @@ public abstract class AbstractUserController {
         return users;
     }
 
-    public User get(int id) throws Throwable {
-        User user = userService.get(id);
-        log.info("GET get user by id: {}, user: {}",id, user);
-        return user;
-    }
-
-    public User getByEmail(String email) {
-        User user = userService.getByEmail(email);
-        log.info("GET get by email: {}, user: {}",email, user);
-        return user;
-    }
-
-    public User create(User user) {
-        log.info("POST create user: {}", user);
-        return userService.create(user);
-    }
-
-    public User update(User user, int id) {
-        log.info("UPDATE update user: {} id: {}, ", user, id);
-        return userService.update(user, id);
-    }
-
-    public boolean delete(int id) {
-        log.info("DELETE delete user id: {}", id);
-        return userService.delete(id);
-    }
+//    public User get(int id) throws Throwable {
+//        User user = userService.get(id);
+//        log.info("GET get user by id: {}, user: {}",id, user);
+//        return user;
+//    }
+//
+//    public User getByEmail(String email) {
+//        User user = userService.getByEmail(email);
+//        log.info("GET get by email: {}, user: {}",email, user);
+//        return user;
+//    }
+//
+//    public User create(User user) {
+//        log.info("POST create user: {}", user);
+//        return userService.create(user);
+//    }
+//
+//    public User update(User user, int id) {
+//        log.info("UPDATE update user: {} id: {}, ", user, id);
+//        return userService.update(user, id);
+//    }
+//
+//    public boolean delete(int id) {
+//        log.info("DELETE delete user id: {}", id);
+//        return userService.delete(id);
+//    }
 }

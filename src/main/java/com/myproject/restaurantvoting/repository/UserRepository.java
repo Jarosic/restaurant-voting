@@ -2,18 +2,32 @@ package com.myproject.restaurantvoting.repository;
 
 
 import com.myproject.restaurantvoting.model.User;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface UserRepository {
+@Repository
+@Transactional(readOnly = true)
+public interface UserRepository extends JpaRepository<User, Integer> {
 
-    List<User> getAll();
+    @Override
+    @Query("SELECT u FROM User u LEFT JOIN FETCH u.roles ORDER BY u.name, u.email")
+    List<User> findAll();
 
-    User get(int id);
+    @Query("SELECT u FROM User u WHERE u.email = LOWER(:email)")
+    Optional<User> findByEmailIgnoreCase(String email);
 
-    User getByEmail(String email);
+    @Transactional
+    @Override
+    User save(User user);
 
-    User save(User User);
+    @Transactional
+    @Override
+    void deleteById(Integer id);
 
-    boolean delete(int id);
 }

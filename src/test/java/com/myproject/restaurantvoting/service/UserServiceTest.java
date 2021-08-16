@@ -1,8 +1,10 @@
 package com.myproject.restaurantvoting.service;
 
 import com.myproject.restaurantvoting.data.UserTestData;
+import com.myproject.restaurantvoting.error.exceptions.NotFoundException;
 import com.myproject.restaurantvoting.error.exceptions.VotingTimeLimitException;
 import com.myproject.restaurantvoting.model.User;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,7 +14,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+@Slf4j
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserServiceTest extends AbstractServiceTest {
 
@@ -66,25 +68,6 @@ public class UserServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    @Override
-    @Order(11)
-    public void update() {
-        User update = UserTestData.getUpdate();
-        service.update(update, ID);
-        User expected = service.get(ID);
-        assertThat(update).usingRecursiveComparison()
-                .ignoringFields("registered")
-                .isEqualTo(expected);
-    }
-
-    @Test
-    @Override
-    @Order(7)
-    public void delete() {
-        Assertions.assertTrue(service.delete(ID));
-    }
-
-    @Test
     @Order(5)
     public void voteNew() {
         User update = UserTestData
@@ -99,7 +82,7 @@ public class UserServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    @Order(8)
+    @Order(6)
     public void reVoteWithoutException() {
         LocalDateTime firstVote = LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 0));
         LocalDateTime secondVote = LocalDateTime.of(LocalDate.now(), LocalTime.of(11, 0));
@@ -119,7 +102,7 @@ public class UserServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    @Order(9)
+    @Order(7)
     public void reVoteWithException() {
         LocalDateTime firstVote = LocalDateTime.of(LocalDate.now(), LocalTime.of(10, 0));
         LocalDateTime secondVote = LocalDateTime.of(LocalDate.now(), LocalTime.of(13, 0));
@@ -132,5 +115,25 @@ public class UserServiceTest extends AbstractServiceTest {
 
         Assertions.assertThrows(VotingTimeLimitException.class,
                 () -> service.vote(reVote.id(), ID + 2, secondVote));
+    }
+
+    @Test
+    @Override
+    @Order(8)
+    public void delete() {
+        service.delete(ID);
+        Assertions.assertThrows(NotFoundException.class, () -> service.get(ID));
+    }
+
+    @Test
+    @Override
+    @Order(9)
+    public void update() {
+        User update = UserTestData.getUpdate();
+        service.update(update, ID);
+        User expected = service.get(ID);
+        assertThat(update).usingRecursiveComparison()
+                .ignoringFields("registered")
+                .isEqualTo(expected);
     }
 }

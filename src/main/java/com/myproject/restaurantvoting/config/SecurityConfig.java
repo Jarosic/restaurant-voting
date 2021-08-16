@@ -1,5 +1,6 @@
 package com.myproject.restaurantvoting.config;
 
+import com.myproject.restaurantvoting.error.exceptions.NotFoundException;
 import com.myproject.restaurantvoting.model.Role;
 import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.repository.UserRepository;
@@ -37,7 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService() {
         return email -> {
             log.info("Authenticating {} ", email);
-            User user = userRepository.getByEmail(email);
+            User user = userRepository.findByEmailIgnoreCase(email.toLowerCase())
+                    .orElseThrow(() -> new NotFoundException("User '" + email + "' was not found"));
             return new SecurityUser(user);
         };
     }
