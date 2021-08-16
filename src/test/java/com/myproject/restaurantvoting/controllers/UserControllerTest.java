@@ -45,24 +45,24 @@ public class UserControllerTest extends AbstractControllerTest{
         Assertions.assertEquals(actual, expected);
     }
 
-//    @Test
-//    @WithMockUser(roles = "ADMIN")
-//    public void create() throws Exception {
-//        User newUser = UserTestData.getNew();
-//        newUser.setId(USER_ID + 12);
-//        when(userService.create(any(User.class))).thenReturn(newUser);
-//        MvcResult result = perform(post(REST_URL)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(objectMapper.writeValueAsString(newUser)))
-//                .andExpect(jsonPath("$.roles").value("USER"))
-//                .andExpect(jsonPath("$.email").value("new@gmail.com"))
-//                .andExpect(status().isCreated())
-//                .andDo(print())
-//                .andReturn();
-//        String actual = result.getResponse().getContentAsString();
-//        String created = objectMapper.writeValueAsString(newUser);
-//        Assertions.assertEquals(created, actual);
-//    }
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    public void create() throws Exception {
+        User newUser = UserTestData.getNew();
+        newUser.setId(USER_ID + 12);
+        when(userService.create(any(User.class))).thenReturn(newUser);
+        MvcResult result = perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(newUser)))
+                .andExpect(jsonPath("$.roles").value("USER"))
+                .andExpect(jsonPath("$.email").value("new@gmail.com"))
+                .andExpect(status().isCreated())
+                .andDo(print())
+                .andReturn();
+        String actual = result.getResponse().getContentAsString();
+        String created = objectMapper.writeValueAsString(newUser);
+        Assertions.assertEquals(created, actual);
+    }
 
     @Test
     @WithMockUser(roles = "ADMIN")

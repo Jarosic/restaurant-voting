@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -17,16 +16,6 @@ import java.util.Collection;
 import java.util.EnumSet;
 import java.util.Set;
 
-
-//@NamedQueries({
-//        @NamedQuery(name = User.GET_ALL,
-//                query = "SELECT u FROM User u LEFT JOIN FETCH u.roles ORDER BY u.name, u.email"),
-//        @NamedQuery(name = User.BY_EMAIL,
-//                query = "SELECT u FROM User u LEFT JOIN FETCH u.roles WHERE u.email=?1"),
-//        @NamedQuery(name = User.DELETE,
-//                query = "DELETE FROM User u where u.id=:id")
-//})
-
 @Entity
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
@@ -35,10 +24,6 @@ import java.util.Set;
 @Table(name = "users",
         uniqueConstraints = {@UniqueConstraint(columnNames = "email", name = "users_unique_email_idx")})
 public class User extends AbstractNamedEntity implements Serializable {
-
-//    public static final String GET_ALL = "User.getAll";
-//    public static final String BY_EMAIL = "User.getByEmail";
-//    public static final String DELETE = "User.delete";
 
     @Column(name = "voting_date_time")
     private LocalDateTime votingDateTime;

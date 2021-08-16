@@ -21,16 +21,15 @@ public class RestaurantService {
 
     @Cacheable("restaurants")
     public List<Restaurant> getAll() {
-        List<Restaurant> restaurants = repository.getAll();
+        List<Restaurant> restaurants = repository.findAll();
         log.info("getAllRestaurants: {}", restaurants);
         return restaurants;
     }
 
     @Cacheable("restaurants")
     public Restaurant get(int id) {
-        Restaurant restaurant = repository.get(id);
+        Restaurant restaurant = ValidationUtil.checkForExist(repository.findById(id), id, Restaurant.class);
         log.info("get: {}", restaurant);
-        ValidationUtil.checkForExist(restaurant, id, Restaurant.class);
         return restaurant;
     }
 
@@ -47,8 +46,8 @@ public class RestaurantService {
     }
 
     @CacheEvict(value = "restaurants", allEntries = true)
-    public boolean delete(int id) {
+    public void delete(Integer id) {
         log.info("delete {}", id);
-        return repository.delete(id);
+        repository.deleteById(id);
     }
 }

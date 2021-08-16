@@ -1,11 +1,9 @@
 package com.myproject.restaurantvoting.controllers;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.myproject.restaurantvoting.data.MealTestData;
-import com.myproject.restaurantvoting.data.RestaurantTestData;
-import com.myproject.restaurantvoting.model.Meal;
-import com.myproject.restaurantvoting.service.MealService;
+import com.myproject.restaurantvoting.data.UserTestData;
+import com.myproject.restaurantvoting.model.User;
+import com.myproject.restaurantvoting.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,73 +13,72 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class MealControllerTest extends AbstractControllerTest {
-
-    private final int ID = 100002;
-    private final int RESTAURANT_ID = RestaurantTestData.BARTOLOMEO.id();
-    private final String REST_URL = "/api/meals";
+public class AccountControllerTest extends AbstractControllerTest {
+    private final Integer USER_ID = 100000;
+    private final String REST_URL = "/api/account";
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @MockBean
-    private MealService mealService;
+    private UserService userService;
 
     @Test
-    @WithMockUser(roles = "ADMIN")
-    public void create() throws Exception {
-        String url = REST_URL + "?restaurantId=" + RESTAURANT_ID;
-        Meal newMeal = MealTestData.getNew();
-        when(mealService.create(any(Meal.class), any(Integer.class))).thenReturn(newMeal);
+    public void register() throws Exception {
+        String url = REST_URL + "/register";
+        User newUser = UserTestData.getNew();
+        newUser.setId(USER_ID + 12);
+        when(userService.create(any(User.class))).thenReturn(newUser);
         MvcResult result = perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(newMeal)))
-                .andExpect(jsonPath("$.description").value("Coconut"))
+                .content(objectMapper.writeValueAsString(newUser)))
+                .andExpect(jsonPath("$.roles").value("USER"))
+                .andExpect(jsonPath("$.email").value("new@gmail.com"))
                 .andExpect(status().isCreated())
                 .andDo(print())
                 .andReturn();
         String actual = result.getResponse().getContentAsString();
-        String expected = objectMapper.writeValueAsString(newMeal);
-        Assertions.assertEquals(expected, actual);
+        String created = objectMapper.writeValueAsString(newUser);
+        Assertions.assertEquals(created, actual);
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
-    public void getById() throws Exception {
-        String url = REST_URL + "/" + ID;
-        Meal meal = MealTestData.meal;
-        when(mealService.get(ID)).thenReturn(meal);
-        MvcResult result = perform(get(url)
+    @WithMockUser(roles = "USER")
+    public void getUser() throws Exception {
+        User user = UserTestData.USER;
+        //when(userService.get(USER_ID)).thenReturn(user);
+        when(userService.get(anyInt())).thenReturn(user);
+        MvcResult result = perform(get(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(meal)))
+                .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(ID))
+                .andExpect(jsonPath("$.id").value(USER_ID))
                 .andDo(print())
                 .andReturn();
         String actual = result.getResponse().getContentAsString();
-        String expected = objectMapper.writeValueAsString(meal);
+        String expected = objectMapper.writeValueAsString(user);
         Assertions.assertEquals(expected, actual);
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(roles = "USER")
     public void update() throws Exception {
-        String url = REST_URL + "/" + ID + "?restaurantId=" + RESTAURANT_ID;
-        Meal updated = MealTestData.getUpdate();
-        updated.setId(ID);
-        when(mealService.update(updated, RESTAURANT_ID)).thenReturn(updated);
-        MvcResult result = perform(put(url)
+        User updated = UserTestData.getUpdate();
+        updated.setId(USER_ID);
+        updated.setRestaurantId(100002);
+        when(userService.update(any(User.class), any(Integer.class))).thenReturn(updated);
+        MvcResult result = perform(put(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(updated)))
-                .andExpect(jsonPath("$.description").value("Coca-cola"))
-                .andExpect(jsonPath("$.id").value(ID))
+                .andExpect(jsonPath("$.email").value("update@gmail.com"))
+                .andExpect(jsonPath("$.id").value(USER_ID))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn();
@@ -91,10 +88,9 @@ public class MealControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "ADMIN")
+    @WithMockUser(roles = "USER")
     public void delete() throws Exception {
-        String url = REST_URL + "/" + ID;
-        perform(MockMvcRequestBuilders.delete(url)
+        perform(MockMvcRequestBuilders.delete(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andDo(print())

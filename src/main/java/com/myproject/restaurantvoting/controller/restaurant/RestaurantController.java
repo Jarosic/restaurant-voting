@@ -56,14 +56,14 @@ public class RestaurantController extends AbstractRestaurantController {
     @Override
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public boolean delete(@PathVariable int id) {
-        return super.delete(id);
+    public void delete(@PathVariable Integer id) {
+        super.delete(id);
     }
 
-//    @Override
-//    @PatchMapping(value = "/vote")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public User vote(@AuthenticationPrincipal SecurityUser authUser, @RequestParam int restaurantId) {
-//        return super.vote(authUser, restaurantId);
-//    }
+    @Override
+    @PatchMapping(value = "/vote")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public User vote(@AuthenticationPrincipal SecurityUser authUser, @RequestParam int restaurantId) {
+        return super.vote(authUser, restaurantId);
+    }
 }

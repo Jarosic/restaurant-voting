@@ -35,8 +35,7 @@ public class UserService implements UserDetailsService {
 
     @Cacheable(value = "users")
     public User get(int id) {
-        User user = repository.findById(id)
-                .orElseThrow(() -> new NotFoundException("User with id = " + id + ", is not exist!"));
+        User user = ValidationUtil.checkForExist(repository.findById(id), id, User.class);
         log.info("get: {}", user);
         return user;
     }
@@ -62,8 +61,7 @@ public class UserService implements UserDetailsService {
         log.info("update user: {}, id: {}", user, id);
         ValidationUtil.assureIdConsistent(user, id);
         if (user.getPassword() == null) {
-            User u = repository.findById(id)
-                    .orElseThrow(() -> new NotFoundException("User with id = " + id + ", is not exist!"));
+            User u = ValidationUtil.checkForExist(repository.findById(id), id, User.class);
             user.setPassword(u.getPassword());
         }
         user.setId(id);
@@ -81,9 +79,7 @@ public class UserService implements UserDetailsService {
         log.info("vote {}", restaurantId);
         User user = new User();
         if (userId != null) {
-            User u = repository.findById(userId)
-                    .orElseThrow(() -> new NotFoundException("User with id = " + userId + ", is not exist!"));
-            user = u;
+            user = ValidationUtil.checkForExist(repository.findById(userId), userId, User.class);
         }
         return repository.save(VoteUtil.voteCreateUpdateHelper(user, restaurantId, votingDateTime));
     }

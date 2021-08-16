@@ -1,7 +1,9 @@
 package com.myproject.restaurantvoting.service;
 
 import com.myproject.restaurantvoting.model.Meal;
+import com.myproject.restaurantvoting.model.Restaurant;
 import com.myproject.restaurantvoting.repository.MealRepository;
+import com.myproject.restaurantvoting.repository.RestaurantRepository;
 import com.myproject.restaurantvoting.util.ValidationUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,30 +16,38 @@ import org.springframework.stereotype.Service;
 @Service
 public class MealService {
 
-    private final MealRepository repository;
+    private final MealRepository mealRepository;
+
+    private final RestaurantRepository restaurantRepository;
 
     public Meal get(int id) {
-        Meal meal = repository.get(id);
+        Meal meal = ValidationUtil.checkForExist(mealRepository.findById(id), id, Meal.class);
         log.info("getMeal: {}", meal);
-        ValidationUtil.checkForExist(meal, id, Meal.class);
+
         return meal;
     }
 
     @CachePut("restaurants")
     public Meal create(Meal meal, int restaurantId) {
         log.info("create {}", meal);
-        return repository.save(meal, restaurantId);
+        Restaurant restaurant = ValidationUtil
+                .checkForExist(restaurantRepository.findById(restaurantId), restaurantId, Restaurant.class);
+        meal.setRestaurant(restaurant);
+        return mealRepository.save(meal);
     }
 
     @CachePut("restaurants")
     public Meal update(Meal meal, int restaurantId) {
         log.info("update {}", meal);
-        return repository.save(meal, restaurantId);
+        Restaurant restaurant = ValidationUtil
+                .checkForExist(restaurantRepository.findById(restaurantId), restaurantId, Restaurant.class);
+        meal.setRestaurant(restaurant);
+        return mealRepository.save(meal);
     }
 
     @CacheEvict(value = "restaurants", allEntries = true)
-    public boolean delete(int id) {
+    public void delete(Integer id) {
         log.info("delete {}", id);
-        return repository.delete(id);
+        mealRepository.deleteById(id);
     }
 }

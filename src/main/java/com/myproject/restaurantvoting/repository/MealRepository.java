@@ -2,12 +2,19 @@ package com.myproject.restaurantvoting.repository;
 
 
 import com.myproject.restaurantvoting.model.Meal;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-public interface MealRepository {
+@Repository
+@Transactional(readOnly = true)
+public interface MealRepository extends JpaRepository<Meal, Integer> {
 
-    Meal get(int id);
+    @Override
+    @Transactional
+    Meal save(Meal meal);
 
-    Meal save(Meal meal, int restaurantId);
-
-    boolean delete(int id);
+    @Override
+    @Transactional
+    void deleteById(Integer integer);
 }

@@ -2,6 +2,7 @@ package com.myproject.restaurantvoting.service;
 
 import com.myproject.restaurantvoting.data.MealTestData;
 import com.myproject.restaurantvoting.data.RestaurantTestData;
+import com.myproject.restaurantvoting.error.exceptions.NotFoundException;
 import com.myproject.restaurantvoting.model.Meal;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -54,6 +55,7 @@ public class MealServiceTest extends AbstractServiceTest {
     @Test
     @Override
     public void delete() {
-        Assertions.assertTrue(mealService.delete(ID + 2));
+        mealService.delete(ID + 2);
+        Assertions.assertThrows(NotFoundException.class, () -> mealService.get(ID));
     }
 }

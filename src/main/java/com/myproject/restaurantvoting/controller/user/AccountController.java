@@ -33,31 +33,31 @@ public class AccountController {
         return authUser.getUser();
     }
 
-//    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(value = HttpStatus.CREATED)
-//    public ResponseEntity<User> register(@RequestBody User user) {
-//        log.info("POST register user: {}", user);
-//        user.setRoles(Set.of(Role.USER));
-//        user = userService.create(user);
-//        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                .path("/api/account")
-//                .build().toUri();
-//        return ResponseEntity.created(uriOfNewResource).body(user);
-//    }
-//
-//    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public User update(@RequestBody User user, @AuthenticationPrincipal SecurityUser authUser) {
-//        log.info("PUT update {} to {}", authUser, user);
-//        User oldUser = authUser.getUser();
-//        ValidationUtil.assureIdConsistent(user, oldUser.id());
-//        user.setRoles(oldUser.getRoles());
-//        return userService.update(user, authUser.id());
-//    }
-//
-//    @DeleteMapping
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public void delete(@AuthenticationPrincipal SecurityUser authUser) {
-//        log.info("DELETE delete user {}", authUser);
-//        userService.delete(authUser.id());
-//    }
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public ResponseEntity<User> register(@RequestBody User user) {
+        log.info("POST register user: {}", user);
+        user.setRoles(Set.of(Role.USER));
+        user = userService.create(user);
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/api/account")
+                .build().toUri();
+        return ResponseEntity.created(uriOfNewResource).body(user);
+    }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public User update(@RequestBody User user, @AuthenticationPrincipal SecurityUser authUser) {
+        log.info("PUT update {} to {}", authUser, user);
+        User oldUser = authUser.getUser();
+        ValidationUtil.assureIdConsistent(user, oldUser.id());
+        user.setRoles(oldUser.getRoles());
+        return userService.update(user, authUser.id());
+    }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@AuthenticationPrincipal SecurityUser authUser) {
+        log.info("DELETE delete user {}", authUser);
+        userService.delete(authUser.id());
+    }
 }

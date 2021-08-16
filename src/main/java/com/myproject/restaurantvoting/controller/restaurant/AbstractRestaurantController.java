@@ -43,15 +43,14 @@ public abstract class AbstractRestaurantController {
         return restaurantService.update(restaurant);
     }
 
-    public boolean delete(int id) {
+    public void delete(Integer id) {
         log.info("DELETE delete restaurant id:{}", id);
-        return restaurantService.delete(id);
+        restaurantService.delete(id);
     }
 
-//    public User vote(SecurityUser authUser, int restaurantId) {
-//        log.info("PATCH vote restaurantID: {}", restaurantId);
-//        Restaurant restaurant = restaurantService.get(restaurantId);
-//        ValidationUtil.checkForExist(restaurant, restaurantId, Restaurant.class);
-//        return userService.vote(authUser.id(), restaurantId, LocalDateTime.now());
-//    }
+    public User vote(SecurityUser authUser, int restaurantId) {
+        log.info("PATCH vote restaurantID: {}", restaurantId);
+        restaurantService.get(restaurantId);//check for exist
+        return userService.vote(authUser.id(), restaurantId, LocalDateTime.now());
+    }
 }

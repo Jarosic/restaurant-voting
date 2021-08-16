@@ -27,8 +27,8 @@ public abstract class AbstractMealController {
         return service.update(meal, restaurantId);
     }
 
-    public boolean delete(int id) {
+    public void delete(Integer id) {
         log.info("DELETE delete meal id: {}", id);
-        return service.delete(id);
+        service.delete(id);
     }
 }

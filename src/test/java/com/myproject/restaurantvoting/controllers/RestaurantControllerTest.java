@@ -39,7 +39,6 @@ public class RestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-
         String actual = result.getResponse().getContentAsString();
         String expected = objectMapper.writeValueAsString(RestaurantTestData.restaurants);
         Assertions.assertEquals(actual, expected);
@@ -104,12 +103,10 @@ public class RestaurantControllerTest extends AbstractControllerTest {
     @WithMockUser(roles = "ADMIN")
     public void delete() throws Exception {
         String url = REST_URL + "/" + ID;
-        when(restaurantService.delete(ID)).thenReturn(true);
-        MvcResult result = perform(MockMvcRequestBuilders.delete(url)
+        perform(MockMvcRequestBuilders.delete(url)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
                 .andDo(print())
                 .andReturn();
-        Assertions.assertTrue(Boolean.parseBoolean(result.getResponse().getContentAsString()));
     }
 }

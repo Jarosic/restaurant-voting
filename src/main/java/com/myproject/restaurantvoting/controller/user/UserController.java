@@ -26,38 +26,38 @@ public class UserController extends AbstractUserController {
         return super.getAll();
     }
 
-//    @Override
-//    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public User get(@PathVariable int id) throws Throwable {
-//        return super.get(id);
-//    }
-//
-//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-//    @ResponseStatus(value = HttpStatus.CREATED)
-//    public ResponseEntity<User> createWithLocation(@RequestBody User user) {
-//        User created = super.create(user);
-//        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                .path(REST_URL + "/{id}")
-//                .buildAndExpand(created.getId()).toUri();
-//        return ResponseEntity.created(uriOfNewResource).body(created);
-//    }
-//
-//    @Override
-//    @GetMapping("/by")
-//    public User getByEmail(@RequestParam String email) {
-//        return super.getByEmail(email);
-//    }
-//
-//    @Override
-//    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public User update(@RequestBody User user, @PathVariable int id) {
-//        return super.update(user, id);
-//    }
-//
-//    @Override
-//    @DeleteMapping("/{id}")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public boolean delete(@PathVariable int id) {
-//        return super.delete(id);
-//    }
+    @Override
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public User get(@PathVariable int id) throws Throwable {
+        return super.get(id);
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public ResponseEntity<User> createWithLocation(@RequestBody User user) {
+        User created = super.create(user);
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(created);
+    }
+
+    @Override
+    @GetMapping("/by")
+    public User getByEmail(@RequestParam String email) {
+        return super.getByEmail(email);
+    }
+
+    @Override
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public User update(@RequestBody User user, @PathVariable int id) {
+        return super.update(user, id);
+    }
+
+    @Override
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int id) {
+        super.delete(id);
+    }
 }

@@ -3,7 +3,8 @@ package com.myproject.restaurantvoting.util;
 import com.myproject.restaurantvoting.error.exceptions.IllegalRequestDataException;
 import com.myproject.restaurantvoting.error.exceptions.NotFoundException;
 import com.myproject.restaurantvoting.model.AbstractBaseEntity;
-import com.myproject.restaurantvoting.model.User;
+
+import java.util.Optional;
 
 public class ValidationUtil {
 
@@ -22,15 +23,9 @@ public class ValidationUtil {
         }
     }
 
-    public static <T> void checkForExist(Object entity, Integer id, Class<T> clazz) {
-        if (entity == null) {
-            throw  new NotFoundException(clazz.getSimpleName() + " with id = " + id + ", is not exist!");
-        }
-    }
+    public static <T> T checkForExist(Optional<T> opt, Integer id, Class<T> clazz) {
+        return opt.orElseThrow(()
+                -> new NotFoundException(clazz.getSimpleName() + " with id = " + id + ", is not exist!"));
 
-    public static void checkUserByEmail(User user, String email) {
-        if (user == null) {
-            throw  new NotFoundException("User with email = " + email + ", is not exist!");
-        }
     }
 }
