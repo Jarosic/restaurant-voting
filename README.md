@@ -23,6 +23,6 @@ username: admin@gmail.com;
 password: admin;
 
 USER:
-username: user@yandex.ru;
-password: user.
+username: user@gmail.com;
+password: user
 
