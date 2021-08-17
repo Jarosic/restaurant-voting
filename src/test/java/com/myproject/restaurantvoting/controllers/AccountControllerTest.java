@@ -20,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
 public class AccountControllerTest extends AbstractControllerTest {
     private final Integer USER_ID = 100000;
     private final String REST_URL = "/api/account";
@@ -50,11 +51,17 @@ public class AccountControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    void getUnAuth() throws Exception {
+        perform(get(REST_URL))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
     @WithMockUser(roles = "USER")
     public void getUser() throws Exception {
         User user = UserTestData.USER;
         //when(userService.get(USER_ID)).thenReturn(user);
-        when(userService.get(anyInt())).thenReturn(user);
+        //when().thenReturn(user);
         MvcResult result = perform(get(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)))
@@ -73,7 +80,7 @@ public class AccountControllerTest extends AbstractControllerTest {
         User updated = UserTestData.getUpdate();
         updated.setId(USER_ID);
         updated.setRestaurantId(100002);
-        when(userService.update(any(User.class), any(Integer.class))).thenReturn(updated);
+        when(userService.update(anyObject(), anyInt())).thenReturn(updated);
         MvcResult result = perform(put(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(updated)))
@@ -93,7 +100,6 @@ public class AccountControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.delete(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNoContent())
-                .andDo(print())
-                .andReturn();
+                .andDo(print());
     }
 }

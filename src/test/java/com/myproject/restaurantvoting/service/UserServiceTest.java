@@ -4,9 +4,9 @@ import com.myproject.restaurantvoting.data.UserTestData;
 import com.myproject.restaurantvoting.error.exceptions.NotFoundException;
 import com.myproject.restaurantvoting.error.exceptions.VotingTimeLimitException;
 import com.myproject.restaurantvoting.model.User;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,12 +14,21 @@ import java.time.LocalTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-@Slf4j
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class UserServiceTest extends AbstractServiceTest {
 
     @Autowired
     private UserService service;
+
+//    @Autowired
+//    CacheManager cacheManager;
+//
+//    @BeforeEach
+//    public void cacheEvict() {
+//        cacheManager.getCacheNames().stream()
+//                .forEach(cacheName -> cacheManager.getCache(cacheName).clear());
+//    }
 
     @Test
     @Override
