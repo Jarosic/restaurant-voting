@@ -5,7 +5,6 @@ import com.myproject.restaurantvoting.model.User;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static com.myproject.restaurantvoting.model.AbstractBaseEntity.START_SEQ;

@@ -6,7 +6,6 @@ import com.myproject.restaurantvoting.error.exceptions.VotingTimeLimitException;
 import com.myproject.restaurantvoting.model.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,15 +19,6 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Autowired
     private UserService service;
-
-//    @Autowired
-//    CacheManager cacheManager;
-//
-//    @BeforeEach
-//    public void cacheEvict() {
-//        cacheManager.getCacheNames().stream()
-//                .forEach(cacheName -> cacheManager.getCache(cacheName).clear());
-//    }
 
     @Test
     @Override

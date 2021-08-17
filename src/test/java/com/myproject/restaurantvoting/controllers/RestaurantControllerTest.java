@@ -2,7 +2,9 @@ package com.myproject.restaurantvoting.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myproject.restaurantvoting.data.RestaurantTestData;
+import com.myproject.restaurantvoting.data.UserTestData;
 import com.myproject.restaurantvoting.model.Restaurant;
+import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.service.RestaurantService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -108,5 +111,20 @@ public class RestaurantControllerTest extends AbstractControllerTest {
                 .andExpect(status().isNoContent())
                 .andDo(print())
                 .andReturn();
+    }
+
+    @Test
+    @WithUserDetails(value = "user@gmail.com", userDetailsServiceBeanName = "userDetailsService")
+    public void vote() throws Exception {
+        String url = REST_URL + "/vote?restaurantId=" + ID;
+        User user = UserTestData.getUpdateWithVote(null, ID);
+        perform(patch(url)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(user)))
+                .andExpect(status().isNoContent())
+                .andExpect(jsonPath("$.name").value("User"))
+                .andExpect(jsonPath("$.id").value(user.getId()))
+                .andExpect(jsonPath("$.restaurantId").value(ID))
+                .andDo(print());
     }
 }

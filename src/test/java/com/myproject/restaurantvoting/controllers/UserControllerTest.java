@@ -39,7 +39,6 @@ public class UserControllerTest extends AbstractControllerTest{
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-
         String actual = result.getResponse().getContentAsString();
         String expected = objectMapper.writeValueAsString(UserTestData.getUserList());
         Assertions.assertEquals(actual, expected);

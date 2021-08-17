@@ -4,16 +4,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myproject.restaurantvoting.data.UserTestData;
 import com.myproject.restaurantvoting.model.User;
 import com.myproject.restaurantvoting.service.UserService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -35,19 +35,15 @@ public class AccountControllerTest extends AbstractControllerTest {
     public void register() throws Exception {
         String url = REST_URL + "/register";
         User newUser = UserTestData.getNew();
-        newUser.setId(USER_ID + 12);
         when(userService.create(any(User.class))).thenReturn(newUser);
-        MvcResult result = perform(post(url)
+        perform(post(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(newUser)))
                 .andExpect(jsonPath("$.roles").value("USER"))
                 .andExpect(jsonPath("$.email").value("new@gmail.com"))
+                .andExpect(jsonPath("$.name").value("New"))
                 .andExpect(status().isCreated())
-                .andDo(print())
-                .andReturn();
-        String actual = result.getResponse().getContentAsString();
-        String created = objectMapper.writeValueAsString(newUser);
-        Assertions.assertEquals(created, actual);
+                .andDo(print());
     }
 
     @Test
@@ -57,44 +53,39 @@ public class AccountControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithUserDetails(value = "user@gmail.com", userDetailsServiceBeanName = "userDetailsService")
     public void getUser() throws Exception {
         User user = UserTestData.USER;
-        //when(userService.get(USER_ID)).thenReturn(user);
-        //when().thenReturn(user);
-        MvcResult result = perform(get(REST_URL)
+        perform(get(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(user)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(USER_ID))
-                .andDo(print())
-                .andReturn();
-        String actual = result.getResponse().getContentAsString();
-        String expected = objectMapper.writeValueAsString(user);
-        Assertions.assertEquals(expected, actual);
+                .andExpect(jsonPath("$.name").value("User"))
+                .andExpect(jsonPath("$.email").value("user@gmail.com"))
+                .andDo(print());
     }
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithUserDetails(value = "user@gmail.com", userDetailsServiceBeanName = "userDetailsService")
     public void update() throws Exception {
         User updated = UserTestData.getUpdate();
         updated.setId(USER_ID);
         updated.setRestaurantId(100002);
-        when(userService.update(anyObject(), anyInt())).thenReturn(updated);
-        MvcResult result = perform(put(REST_URL)
+        when(userService.update(any(User.class), anyInt())).thenReturn(updated);
+        perform(put(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(updated)))
                 .andExpect(jsonPath("$.email").value("update@gmail.com"))
                 .andExpect(jsonPath("$.id").value(USER_ID))
+                .andExpect(jsonPath("$.name").value("UpdatedName"))
+                .andExpect(jsonPath("$.restaurantId").value(100002))
                 .andDo(print())
-                .andExpect(status().isOk())
-                .andReturn();
-        String actual = result.getResponse().getContentAsString();
-        String expected = objectMapper.writeValueAsString(updated);
-        Assertions.assertEquals(expected, actual);
+                .andExpect(status().isOk());
     }
 
     @Test
+    @WithUserDetails(value = "user@gmail.com", userDetailsServiceBeanName = "userDetailsService")
     @WithMockUser(roles = "USER")
     public void delete() throws Exception {
         perform(MockMvcRequestBuilders.delete(REST_URL)
